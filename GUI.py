@@ -1,14 +1,9 @@
-import sys
-
 # 1. Import `QApplication` and all the required widgets
-from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableWidget,QTableWidgetItem,QVBoxLayout
-from Model import Model
-from TOGOController import TOGOController
 
 class TOGO_UI(QMainWindow):
     #Constructor for TOGO_UI
@@ -16,40 +11,40 @@ class TOGO_UI(QMainWindow):
         """View initializer."""
         super().__init__()
         # Set some main window's properties
-        self.setWindowTitle('DirigentgatanTOGO')
+        self.stopList = stopList
+        self.setWindowTitle(self.stopList[0]+' and '+self.stopList[1])
         self.generalLayout = QGridLayout()
         # Set the central widget
         self._centralWidget = QWidget(self)
         self.setCentralWidget(self._centralWidget)
         self._centralWidget.setLayout(self.generalLayout)
         self._createDisplay()
-        self.stopList = stopList
 
     def _createDisplay(self):
         # main does not exist once this is called
-        self.generalLayout.addWidget(QLabel('<p style="text-align:center;"><h1>DirigentgatanTOGO</h1></p>'), 0, 0, 1, 3)
-        self.generalLayout.addWidget(QLabel('Lantmilsgatan'), 1, 0)
+        self.generalLayout.addWidget(QLabel('<p style="text-align:center;"><h1>TOGO</h1></p>'), 0, 0, 1, 3)
+        self.generalLayout.addWidget(QLabel(self.stopList[0]), 1, 0)
 
         self.generalLayout.addWidget(QLabel('Avgång'), 2, 0)
         self.generalLayout.addWidget(QLabel('Mot'), 2, 1)
         self.generalLayout.addWidget(QLabel('Tid'), 2, 2)
-        self.vagn1 = QLabel('Spårvagn 1')
+        self.vagn1 = QLabel('Transportmedel')
         self.generalLayout.addWidget(self.vagn1, 3, 0)
-        self.mot1 = QLabel('Frölunda')
+        self.mot1 = QLabel('Slutdestination')
         self.generalLayout.addWidget(self.mot1, 3, 1)
-        self.time1 = QLabel('2 minuter')
+        self.time1 = QLabel('Datum och tid')
         self.generalLayout.addWidget(self.time1, 3, 2)
 
-        self.generalLayout.addWidget(QLabel('Fyrktorget'), 4, 0)
+        self.generalLayout.addWidget(QLabel(self.stopList[1]), 4, 0)
 
         self.generalLayout.addWidget(QLabel('Avgång'), 5, 0)
         self.generalLayout.addWidget(QLabel('Mot'), 5, 1)
         self.generalLayout.addWidget(QLabel('Tid'), 5, 2)
-        self.vagn2 = QLabel('Buss 16')
+        self.vagn2 = QLabel('Transportmedel')
         self.generalLayout.addWidget(self.vagn2, 6, 0)
-        self.mot2 = QLabel('Ekträgatan')
+        self.mot2 = QLabel('Slutdestination')
         self.generalLayout.addWidget(self.mot2, 6, 1)
-        self.time2 = QLabel('2 minuter')
+        self.time2 = QLabel('Datum och tid')
         self.generalLayout.addWidget(self.time2, 6, 2)
 
         self.updateButton = QPushButton('Uppdatera')
@@ -88,16 +83,3 @@ class TOGO_UI(QMainWindow):
 
         self.tableWidget.move(0, 0)
 
-def main():
-    stopList = ['Lindholmen', 'Lindholmspiren']
-    app = QApplication(sys.argv)
-    view = TOGO_UI(stopList)
-    view.show()
-
-    model = Model(stopList)
-    controller = TOGOController(model, view)
-    # Execute the calculator's main loop
-    sys.exit(app.exec())
-
-if __name__ == '__main__':
-    main()
