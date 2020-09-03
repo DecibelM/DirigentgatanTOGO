@@ -4,6 +4,11 @@ from datetime import datetime
 
 class Model():
 
+    def __init__(self):
+        self.stopList = ['Lindholmen', 'Lindholmspiren']
+        self.client = Client()
+
+
     def getDeparturesList(self,departures):
         rawDepList = departures['DepartureBoard']['Departure']
         departureObjectList = []
@@ -32,12 +37,10 @@ class Model():
 
 
     def update(self):
-        stopList = ['Lindholmen', 'Lindholmspiren']
-        client = Client()
         depDict = {}
 
-        for stop in stopList:
-            departures = client.getDepartures(stop)
+        for stop in self.stopList:
+            departures = self.client.getDepartures(stop)
             departureList = self.getDeparturesList(departures)
             depDict[stop] = departureList
             #print(" ")
