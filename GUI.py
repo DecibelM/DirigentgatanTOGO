@@ -11,7 +11,7 @@ from Model import Model
 from TOGOController import TOGOController
 
 class TOGO_UI(QMainWindow):
-
+    #Constructor for TOGO_UI
     def __init__(self,stopList):
         """View initializer."""
         super().__init__()

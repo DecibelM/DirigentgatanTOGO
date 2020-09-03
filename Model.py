@@ -3,7 +3,7 @@ from Departure import Departure
 from datetime import datetime
 
 class Model():
-
+    #Constructor for Model class
     def __init__(self,stopList):
         self.client = Client()
         self.stopList = stopList
