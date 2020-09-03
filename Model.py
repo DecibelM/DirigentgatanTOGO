@@ -6,7 +6,7 @@ class Model():
 
     def __init__(self,stopList):
         self.client = Client()
-        self.stopList=stopList
+        self.stopList = stopList
 
 
     def getDeparturesList(self,departures):
