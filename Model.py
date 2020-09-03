@@ -25,14 +25,15 @@ class Model():
         now = datetime.now()
 
         for departureObject in departureList:
-            difference = departureObject.time - now
-            noSeconds = difference.seconds
-            noSecondsRounded = round(noSeconds/60.0)
-            print("Avgång: " + departureObject.name +
-                  ", Mot: " + departureObject.direction +
-                  ", Tid: " + str(departureObject.time) +
-                  " - Now: " + str(now) +
-                  ", Om " + str(noSecondsRounded) + " minuter")
+            if departureObject.time >= now:
+                difference = departureObject.time - now
+                noSeconds = difference.seconds
+                noSecondsRounded = round(noSeconds/60.0)
+                print("Avgång: " + departureObject.name +
+                      ", Mot: " + departureObject.direction +
+                      ", Tid: " + str(departureObject.time) +
+                      " - Now: " + str(now) +
+                      ", Om " + str(noSecondsRounded) + " minuter")
 
 
     def update(self):
@@ -46,11 +47,11 @@ class Model():
         return depDict
 
 if __name__ == '__main__':
-    stopList = ['Lindholmen', 'Lindholmspiren']
+    stopList = ['Lantmilsgatan', 'Fyrktorget']
     model = Model(stopList)
     data=model.update()
     #print("first entries at stop")
     #model.printDepartures(data['Lindholmen'][:2])
     print("all entries at stop")
-    #model.printDepartures(data['Lindholmen'])
-    model.printDepartures(data['Lindholmspiren'])
+    model.printDepartures(data['Lantmilsgatan'])
+    model.printDepartures(data['Fyrktorget'])
