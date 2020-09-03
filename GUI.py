@@ -10,7 +10,6 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableW
 from Model import Model
 from TOGOController import TOGOController
 
-
 class TOGO_UI(QMainWindow):
 
     def __init__(self):
@@ -26,6 +25,7 @@ class TOGO_UI(QMainWindow):
         self._createDisplay()
 
     def _createDisplay(self):
+        # main does not exist once this is called
         self.generalLayout.addWidget(QLabel('<p style="text-align:center;"><h1>DirigentgatanTOGO</h1></p>'), 0, 0, 1, 3)
         self.generalLayout.addWidget(QLabel('Lantmilsgatan'), 1, 0)
 
