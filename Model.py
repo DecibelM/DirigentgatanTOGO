@@ -19,7 +19,9 @@ class Model():
                 time = datetime.strptime(departure['date'] + " " + departure['time'], "%Y-%m-%d %H:%M")
             departureObject = Departure(departure['name'], time , departure['direction'])
             departureObjectList.append(departureObject)
+        departureObjectList.sort(key=lambda x: x.time)
         return departureObjectList
+
 
     def printDepartures(self,departureList):
         now = datetime.now()
