@@ -8,7 +8,6 @@ class Model():
         self.client = Client()
         self.stopList = stopList
 
-
     def getDeparturesList(self,departures):
         rawDepList = departures['DepartureBoard']['Departure']
         departureObjectList = []
@@ -43,9 +42,6 @@ class Model():
             departures = self.client.getDepartures(stop)
             departureList = self.getDeparturesList(departures)
             depDict[stop] = departureList
-            #print(" ")
-            #print(stop)
-            #self.printDepartures(departureList)
 
         return depDict
 
