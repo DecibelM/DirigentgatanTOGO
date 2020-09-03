@@ -26,11 +26,13 @@ class Model():
             noSecondsRounded = round(noSeconds/60.0)
             print("Avgång: " + departureObject.name +
                   ", Mot: " + departureObject.direction +
+                  ", Tid: " + str(departureObject.time) +
+                  " - Now: " + str(now) +
                   ", Om " + str(noSecondsRounded) + " minuter")
 
 
     def update(self):
-        stopList = ['Lantmilsgatan', 'Fyrktorget']
+        stopList = ['Lindholmen', 'Lindholmspiren']
         client = Client()
         depDict = {}
 
@@ -43,3 +45,12 @@ class Model():
             #self.printDepartures(departureList)
 
         return depDict
+
+if __name__ == '__main__':
+    model = Model()
+    data=model.update()
+    #print("first entries at stop")
+    #model.printDepartures(data['Lindholmen'][:2])
+    print("all entries at stop")
+    #model.printDepartures(data['Lindholmen'])
+    model.printDepartures(data['Lindholmspiren'])

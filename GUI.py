@@ -59,12 +59,12 @@ class TOGO_UI(QMainWindow):
 
 
     def updateView(self, data):
-        nextDeparture = data['Lantmilsgatan'][0]
+        nextDeparture = data['Lindholmen'][0]
         self.vagn1.setText(nextDeparture.name)
         self.time1.setText(nextDeparture.time.strftime( "%Y-%m-%d %H:%M"))
         self.mot1.setText(nextDeparture.direction)
 
-        nextDeparture = data['Fyrktorget'][0]
+        nextDeparture = data['Lindholmspiren'][0]
         self.vagn2.setText(nextDeparture.name)
         self.time2.setText(nextDeparture.time.strftime("%Y-%m-%d %H:%M"))
         self.mot2.setText(nextDeparture.direction)
