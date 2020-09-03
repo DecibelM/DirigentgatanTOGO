@@ -88,11 +88,12 @@ class TOGO_UI(QMainWindow):
         self.tableWidget.move(0, 0)
 
 def main():
+    stopList = ['Lindholmen', 'Lindholmspiren']
     app = QApplication(sys.argv)
     view = TOGO_UI()
     view.show()
 
-    model = Model()
+    model = Model(stopList)
     controller = TOGOController(model, view)
     # Execute the calculator's main loop
     sys.exit(app.exec())
