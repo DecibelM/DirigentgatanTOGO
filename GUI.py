@@ -13,7 +13,7 @@ from TOGOController import TOGOController
 
 class TOGO_UI(QMainWindow):
 
-    def __init__(self,stopList):
+    def __init__(self):
         """View initializer."""
         super().__init__()
         # Set some main window's properties
@@ -24,7 +24,6 @@ class TOGO_UI(QMainWindow):
         self.setCentralWidget(self._centralWidget)
         self._centralWidget.setLayout(self.generalLayout)
         self._createDisplay()
-        self.stopList = stopList
 
     def _createDisplay(self):
         self.generalLayout.addWidget(QLabel('<p style="text-align:center;"><h1>DirigentgatanTOGO</h1></p>'), 0, 0, 1, 3)
@@ -60,18 +59,18 @@ class TOGO_UI(QMainWindow):
 
 
     def updateView(self, data):
-        nextDeparture = data[self.stopList[0]][0]
+        nextDeparture = data['Lindholmen'][0]
         self.vagn1.setText(nextDeparture.name)
         self.time1.setText(nextDeparture.time.strftime( "%Y-%m-%d %H:%M"))
         self.mot1.setText(nextDeparture.direction)
 
-        nextDeparture = data[self.stopList[1]][0]
+        nextDeparture = data['Lindholmspiren'][0]
         self.vagn2.setText(nextDeparture.name)
         self.time2.setText(nextDeparture.time.strftime("%Y-%m-%d %H:%M"))
         self.mot2.setText(nextDeparture.direction)
 
     def createTable(self, data):
-        # Create table - not used at the moment
+        # Create table
         self.tableWidget.setRowCount(len(data['Lantmilsgatan'] )+ 1)
         self.tableWidget.setColumnCount(3)
         self.tableWidget.setItem(0, 0, QTableWidgetItem("Avgång"))
@@ -89,12 +88,11 @@ class TOGO_UI(QMainWindow):
         self.tableWidget.move(0, 0)
 
 def main():
-    stopList = ['Lindholmen', 'Lindholmspiren']
     app = QApplication(sys.argv)
-    view = TOGO_UI(stopList)
+    view = TOGO_UI()
     view.show()
 
-    model = Model(stopList)
+    model = Model()
     controller = TOGOController(model, view)
     # Execute the calculator's main loop
     sys.exit(app.exec())

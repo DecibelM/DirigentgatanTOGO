@@ -4,9 +4,9 @@ from datetime import datetime
 
 class Model():
 
-    def __init__(self,stopList):
+    def __init__(self):
+        self.stopList = ['Lindholmen', 'Lindholmspiren']
         self.client = Client()
-        self.stopList = stopList
 
 
     def getDeparturesList(self,departures):
@@ -50,8 +50,7 @@ class Model():
         return depDict
 
 if __name__ == '__main__':
-    stopList = ['Lindholmen', 'Lindholmspiren']
-    model = Model(stopList)
+    model = Model()
     data=model.update()
     #print("first entries at stop")
     #model.printDepartures(data['Lindholmen'][:2])
