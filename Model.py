@@ -17,7 +17,8 @@ class Model():
                 time = datetime.strptime(departure['rtDate'] + " " + departure['rtTime'], "%Y-%m-%d %H:%M")
             else:
                 time = datetime.strptime(departure['date'] + " " + departure['time'], "%Y-%m-%d %H:%M")
-            departureObject = Departure(departure['name'], time , departure['direction'])
+            departureObject = Departure(departure['name'], time , departure['direction'],departure['track'],
+                                        departure['fgColor'],departure['bgColor'])
             departureObjectList.append(departureObject)
         departureObjectList.sort(key=lambda x: x.time)
         return departureObjectList
