@@ -11,14 +11,21 @@ class Model():
     def getDeparturesList(self,departures):
         rawDepList = departures['DepartureBoard']['Departure']
         departureObjectList = []
+        now = datetime.now()
         for departure in rawDepList:
 
             if 'rtTime' in departure:
                 time = datetime.strptime(departure['rtDate'] + " " + departure['rtTime'], "%Y-%m-%d %H:%M")
             else:
                 time = datetime.strptime(departure['date'] + " " + departure['time'], "%Y-%m-%d %H:%M")
-            departureObject = Departure(departure['name'], time , departure['direction'])
-            departureObjectList.append(departureObject)
+
+            if time >= now:
+                difference = time - now
+                noSeconds = difference.seconds
+                deltatime = str(round(noSeconds / 60.0))
+
+                departureObject = Departure(departure['name'], time , departure['direction'], deltatime)
+                departureObjectList.append(departureObject)
         departureObjectList.sort(key=lambda x: x.time)
         return departureObjectList
 

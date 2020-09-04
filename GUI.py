@@ -57,12 +57,12 @@ class TOGO_UI(QMainWindow):
     def updateView(self, data):
         nextDeparture = data[self.stopList[0]][0]
         self.vagn1.setText(nextDeparture.name)
-        self.time1.setText(nextDeparture.time.strftime( "%Y-%m-%d %H:%M"))
+        self.time1.setText(nextDeparture.deltatime + ' minuter')
         self.mot1.setText(nextDeparture.direction)
 
         nextDeparture = data[self.stopList[1]][0]
         self.vagn2.setText(nextDeparture.name)
-        self.time2.setText(nextDeparture.time.strftime("%Y-%m-%d %H:%M"))
+        self.time2.setText(nextDeparture.deltatime + ' minuter')
         self.mot2.setText(nextDeparture.direction)
 
     def createTable(self, data):
