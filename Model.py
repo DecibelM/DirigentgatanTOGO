@@ -24,7 +24,8 @@ class Model():
                 noSeconds = difference.seconds
                 deltatime = str(round(noSeconds / 60.0))
 
-                departureObject = Departure(departure['name'], time , departure['direction'], deltatime)
+                departureObject = Departure(departure['name'], time , departure['direction'],departure['track'],
+                                        departure['fgColor'],departure['bgColor'], deltatime)
                 departureObjectList.append(departureObject)
         departureObjectList.sort(key=lambda x: x.time)
         return departureObjectList
