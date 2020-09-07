@@ -8,6 +8,7 @@ class TOGOController:
         self.model = model
         # Connect signals and slots
         self._view.updateButton.clicked.connect(partial(self.update))
+        self._view.updateView(model.update())
 
     def update(self):
         data = self.model.update()
