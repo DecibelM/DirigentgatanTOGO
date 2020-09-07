@@ -16,20 +16,24 @@ class Model():
 
             if 'rtTime' in departure:
                 time = datetime.strptime(departure['rtDate'] + " " + departure['rtTime'], "%Y-%m-%d %H:%M")
+                deltastr=" "
             else:
                 time = datetime.strptime(departure['date'] + " " + departure['time'], "%Y-%m-%d %H:%M")
+                deltastr="ca "
 
             if time >= now:
-                difference = time - now
-                noSeconds = difference.seconds
-                deltatime = str(round(noSeconds / 60.0))
-
+                deltatime=deltastr + self.get_deltatime(time, now)
                 departureObject = Departure(departure['name'], time , departure['direction'],departure['track'],
                                         departure['fgColor'],departure['bgColor'], deltatime)
                 departureObjectList.append(departureObject)
         departureObjectList.sort(key=lambda x: x.time)
         return departureObjectList
 
+    def get_deltatime(self,time,now):
+        difference = time - now
+        noSeconds = difference.seconds
+        deltatime = str(round(noSeconds / 60.0))
+        return deltatime
 
     def printDepartures(self,departureList):
         now = datetime.now()
