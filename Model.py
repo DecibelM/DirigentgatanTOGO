@@ -23,16 +23,21 @@ class Model():
 
             if time >= now:
                 deltatime=deltastr + self.get_deltatime(time, now)
-                departureObject = Departure(departure['name'], time , departure['direction'],departure['track'],
+                prevDepartureObject = self.findDeparture(departure, departureObjectList)
+                if prevDepartureObject == None:
+                    departureObject = Departure(departure['name'], time , departure['direction'],departure['track'],
                                         departure['fgColor'],departure['bgColor'], deltatime)
-                departureObjectList.append(departureObject)
+                    departureObjectList.append(departureObject)
+                else:
+                    prevDepartureObject.deltatime += deltatime
         departureObjectList.sort(key=lambda x: x.time)
         return departureObjectList
 
     def findDeparture(self, departure, departureObjectList):
 
         for otherDeparture in departureObjectList:
-            if otherDeparture.name == departure['name'] and otherDeparture.track == departure['track']:
+            if otherDeparture.name == departure['name'] and otherDeparture.track == departure['track'] and \
+                    otherDeparture.direction == departure['direction']:
                 return otherDeparture
         return None
 
@@ -46,15 +51,11 @@ class Model():
         now = datetime.now()
 
         for departureObject in departureList:
-            if departureObject.time >= now:
-                difference = departureObject.time - now
-                noSeconds = difference.seconds
-                noSecondsRounded = round(noSeconds/60.0)
                 print("Avgång: " + departureObject.name +
                       ", Mot: " + departureObject.direction +
                       ", Tid: " + str(departureObject.time) +
                       " - Now: " + str(now) +
-                      ", Om " + str(noSecondsRounded) + " minuter")
+                      ", Om " + departureObject.deltatime + " minuter")
 
 
     def update(self):
@@ -68,27 +69,26 @@ class Model():
         return depDict
 
 if __name__ == '__main__':
-    stopList = ['Lantmilsgatan', 'Fyrktorget']
-    model = Model(stopList)
-    model.client.getAccess()
-    departures = model.client.getDepartures(stopList[0])
-    departure1 = Departure('Spårvagn 1', '13:00', 'Tynnered', 'B', '#FFFFFF', '#FFFFFF', 'deltatime')
-    departure2 = Departure('Spårvagn 7', '13:00', 'Tynnered', 'B', '#FFFFFF', '#FFFFFF', 'deltatime')
-    departure3 = Departure('Spårvagn 1', '13:00', 'Östra Sjukhuset', 'A', '#FFFFFF', '#FFFFFF', 'deltatime')
-    departureObjectList = [departure1, departure2, departure3]
-    for departure in departures['DepartureBoard']['Departure']:
-        result = model.findDeparture(departure, departureObjectList)
-        if result != None:
-            print(result.name)
-            print(result.track)
-        else:
-            print(result)
-
     #stopList = ['Lantmilsgatan', 'Fyrktorget']
     #model = Model(stopList)
-    #data = model.update()
-    #print("first entries at stop")
-    #model.printDepartures(data['Lindholmen'][:2])
-    #print("all entries at stop")
-    #model.printDepartures(data['Lantmilsgatan'])
-    #model.printDepartures(data['Fyrktorget'])
+    #model.client.getAccess()
+    #departures = model.client.getDepartures(stopList[0])
+    #departure1 = Departure('Spårvagn 1', '13:00', 'Tynnered', 'B', '#FFFFFF', '#FFFFFF', 'deltatime')
+    #departure2 = Departure('Spårvagn 7', '13:00', 'Tynnered', 'B', '#FFFFFF', '#FFFFFF', 'deltatime')
+    #departure3 = Departure('Spårvagn 1', '13:00', 'Östra Sjukhuset', 'A', '#FFFFFF', '#FFFFFF', 'deltatime')
+    #departureObjectList = [departure1, departure2, departure3]
+    #for departure in departures['DepartureBoard']['Departure']:
+    #    result = model.findDeparture(departure, departureObjectList)
+    #    if result != None:
+    #        print(result.name)
+    #        print(result.track)
+    #    else:
+    #        print(result)
+
+    stopList = ['Lindholmenspiren', 'Lindholmen']
+    model = Model(stopList)
+    data = model.update()
+    print("first entries at stop")
+    model.printDepartures(data['Lindholmen'][:2])
+    print("all entries at stop")
+    model.printDepartures(data['Lindholmen'])
