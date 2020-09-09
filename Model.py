@@ -88,7 +88,5 @@ if __name__ == '__main__':
     stopList = ['Lindholmenspiren', 'Lindholmen']
     model = Model(stopList)
     data = model.update()
-    print("first entries at stop")
-    model.printDepartures(data['Lindholmen'][:2])
     print("all entries at stop")
     model.printDepartures(data['Lindholmen'])
