@@ -29,6 +29,13 @@ class Model():
         departureObjectList.sort(key=lambda x: x.time)
         return departureObjectList
 
+    def findDeparture(self, departure, departureObjectList):
+
+        for otherDeparture in departureObjectList:
+            if otherDeparture.name == departure['name'] and otherDeparture.track == departure['track']:
+                return otherDeparture
+        return None
+
     def get_deltatime(self,time,now):
         difference = time - now
         noSeconds = difference.seconds
@@ -63,9 +70,25 @@ class Model():
 if __name__ == '__main__':
     stopList = ['Lantmilsgatan', 'Fyrktorget']
     model = Model(stopList)
-    data=model.update()
+    model.client.getAccess()
+    departures = model.client.getDepartures(stopList[0])
+    departure1 = Departure('Spårvagn 1', '13:00', 'Tynnered', 'B', '#FFFFFF', '#FFFFFF', 'deltatime')
+    departure2 = Departure('Spårvagn 7', '13:00', 'Tynnered', 'B', '#FFFFFF', '#FFFFFF', 'deltatime')
+    departure3 = Departure('Spårvagn 1', '13:00', 'Östra Sjukhuset', 'A', '#FFFFFF', '#FFFFFF', 'deltatime')
+    departureObjectList = [departure1, departure2, departure3]
+    for departure in departures['DepartureBoard']['Departure']:
+        result = model.findDeparture(departure, departureObjectList)
+        if result != None:
+            print(result.name)
+            print(result.track)
+        else:
+            print(result)
+
+    #stopList = ['Lantmilsgatan', 'Fyrktorget']
+    #model = Model(stopList)
+    #data = model.update()
     #print("first entries at stop")
     #model.printDepartures(data['Lindholmen'][:2])
-    print("all entries at stop")
-    model.printDepartures(data['Lantmilsgatan'])
-    model.printDepartures(data['Fyrktorget'])
+    #print("all entries at stop")
+    #model.printDepartures(data['Lantmilsgatan'])
+    #model.printDepartures(data['Fyrktorget'])
