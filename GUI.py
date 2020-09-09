@@ -21,49 +21,44 @@ class TOGO_UI(QMainWindow):
         self._createDisplay()
 
     def _createDisplay(self):
-        # main does not exist once this is called
         self.generalLayout.addWidget(QLabel('<p style="text-align:center;"><h1>TOGO</h1></p>'), 0, 0, 1, 3)
-        self.generalLayout.addWidget(QLabel(self.stopList[0]), 1, 0)
 
-        self.generalLayout.addWidget(QLabel('Avgång'), 2, 0)
-        self.generalLayout.addWidget(QLabel('Mot'), 2, 1)
-        self.generalLayout.addWidget(QLabel('Tid'), 2, 2)
-        self.vagn1 = QLabel('Transportmedel')
-        self.generalLayout.addWidget(self.vagn1, 3, 0)
-        self.mot1 = QLabel('Slutdestination')
-        self.generalLayout.addWidget(self.mot1, 3, 1)
-        self.time1 = QLabel('Datum och tid')
-        self.generalLayout.addWidget(self.time1, 3, 2)
+        self.generalLayout.addWidget(QLabel('Linje'), 1, 0)
+        self.generalLayout.addWidget(QLabel('Hållplats'), 1, 1)
+        self.generalLayout.addWidget(QLabel('Mot'), 1, 2)
+        self.generalLayout.addWidget(QLabel('Om'), 1, 3)
 
-        self.generalLayout.addWidget(QLabel(self.stopList[1]), 4, 0)
-
-        self.generalLayout.addWidget(QLabel('Avgång'), 5, 0)
-        self.generalLayout.addWidget(QLabel('Mot'), 5, 1)
-        self.generalLayout.addWidget(QLabel('Tid'), 5, 2)
-        self.vagn2 = QLabel('Transportmedel')
-        self.generalLayout.addWidget(self.vagn2, 6, 0)
-        self.mot2 = QLabel('Slutdestination')
-        self.generalLayout.addWidget(self.mot2, 6, 1)
-        self.time2 = QLabel('Datum och tid')
-        self.generalLayout.addWidget(self.time2, 6, 2)
+        self.widgetListName = [None] * 20 * len(self.stopList) # Max 20 entries per stop
+        self.widgetListStopTrack = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
+        self.widgetListDirection = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
+        self.widgetListDeltatime = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
 
         self.updateButton = QPushButton('Uppdatera')
-        self.generalLayout.addWidget(self.updateButton, 7, 1)
+        self.generalLayout.addWidget(self.updateButton, 0, 3)
 
         #self.tableWidget = QTableWidget()
         #self.generalLayout.addWidget(self.tableWidget, 8, 0, 1, 3)
 
 
     def updateView(self, data):
-        nextDeparture = data[self.stopList[0]][0]
-        self.vagn1.setText(nextDeparture.name)
-        self.time1.setText(nextDeparture.deltatime + ' minuter')
-        self.mot1.setText(nextDeparture.direction)
-
-        nextDeparture = data[self.stopList[1]][0]
-        self.vagn2.setText(nextDeparture.name)
-        self.time2.setText(nextDeparture.deltatime + ' minuter')
-        self.mot2.setText(nextDeparture.direction)
+        for i in range(0,len(self.stopList)):
+            k=i*len(data[self.stopList[i]])
+            for j in range(0,len(data[self.stopList[i]])):
+                nextEntry=data[self.stopList[i]][j]
+                if self.widgetListName[k+j] is None:
+                    self.widgetListName[k+j]=QLabel(nextEntry.name)
+                    self.generalLayout.addWidget(self.widgetListName[k + j], k + j + 2, 0)
+                    self.widgetListStopTrack[k+j]=QLabel(self.stopList[0]+", "+nextEntry.track)
+                    self.generalLayout.addWidget(self.widgetListStopTrack[k+j], k + j + 2, 1)
+                    self.widgetListDirection[k+j]=QLabel(nextEntry.direction)
+                    self.generalLayout.addWidget(self.widgetListDirection[k+j], k + j + 2, 2)
+                    self.widgetListDeltatime[k+j]=QLabel(nextEntry.deltatime + 'min')
+                    self.generalLayout.addWidget(self.widgetListDeltatime[k+j], k + j + 2, 3)
+                else:
+                    self.widgetListName[k+j].setText(nextEntry.name)
+                    self.widgetListStopTrack[k + j].setText(self.stopList[0] + ", " + nextEntry.track)
+                    self.widgetListDirection[k + j].setText(nextEntry.direction)
+                    self.widgetListDeltatime[k + j].setText(nextEntry.deltatime + 'min')
 
     def createTable(self, data):
         # Create table - not used at the moment
