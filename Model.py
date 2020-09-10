@@ -8,7 +8,7 @@ class Model():
         self.client = Client()
         self.stopList = stopList
 
-    def getDeparturesList(self,departures):
+    def getDeparturesList(self,departures,stop):
         rawDepList = departures['DepartureBoard']['Departure']
         departureObjectList = []
         now = datetime.now()
@@ -26,7 +26,7 @@ class Model():
                 prevDepartureObject = self.findDeparture(departure, departureObjectList)
                 if prevDepartureObject == None:
                     departureObject = Departure(departure['name'], time , departure['direction'],departure['track'],
-                                        departure['fgColor'],departure['bgColor'], deltatime)
+                                                stop, departure['fgColor'],departure['bgColor'], deltatime)
                     departureObjectList.append(departureObject)
                 else:
                     prevDepartureObject.deltatime += deltatime
@@ -53,6 +53,7 @@ class Model():
         for departureObject in departureList:
                 print("Avgång: " + departureObject.name +
                       ", Mot: " + departureObject.direction +
+                      ", Hållplats, Läge: " + departureObject.stop +", "+ departureObject.track+
                       ", Tid: " + str(departureObject.time) +
                       " - Now: " + str(now) +
                       ", Om " + departureObject.deltatime + " minuter")
@@ -63,7 +64,7 @@ class Model():
 
         for stop in self.stopList:
             departures = self.client.getDepartures(stop)
-            departureList = self.getDeparturesList(departures)
+            departureList = self.getDeparturesList(departures,stop)
             depDict[stop] = departureList
 
         return depDict

@@ -51,7 +51,6 @@ class TOGO_UI(QMainWindow):
                     self.widgetListDeltatime[k+j]=QLabel(nextEntry.deltatime + ' min')
                     self.generalLayout.addWidget(self.widgetListDeltatime[k+j], k + j + 2, 3)
                 else:
-                    print("else",k,j)
                     self.widgetListName[k+j].setText(nextEntry.name)
                     self.widgetListStopTrack[k + j].setText(self.stopList[i] + ", " + nextEntry.track)
                     self.widgetListDirection[k + j].setText(nextEntry.direction)
