@@ -55,7 +55,7 @@ class TOGO_UI(QMainWindow):
                              "}"
                              "QPushButton::pressed"
                              "{"
-                             "background-color : red;"
+                             "background-color : white;"
                              "}"
                              )
         self.generalLayout.addWidget(self.updateButton, 0, 3)
@@ -77,22 +77,3 @@ class TOGO_UI(QMainWindow):
                 self.widgetListStopTrack[j].setText(nextEntry.stop + ", " + nextEntry.track)
                 self.widgetListDirection[j].setText(nextEntry.direction)
                 self.widgetListDeltatime[j].setText(nextEntry.deltatime + ' min')
-        k=0
-        for i in range(0,len(self.stopList)):
-            for j in range(0,len(data[self.stopList[i]])):
-                nextEntry=data[self.stopList[i]][j]
-                if self.widgetListName[k+j] is None:
-                    self.widgetListName[k+j]=QLabel(nextEntry.name)
-                    self.generalLayout.addWidget(self.widgetListName[k + j], k + j + 2, 0)
-                    self.widgetListStopTrack[k+j]=QLabel(self.stopList[i]+", "+nextEntry.track)
-                    self.generalLayout.addWidget(self.widgetListStopTrack[k+j], k + j + 2, 1)
-                    self.widgetListDirection[k+j]=QLabel(nextEntry.direction)
-                    self.generalLayout.addWidget(self.widgetListDirection[k+j], k + j + 2, 2)
-                    self.widgetListDeltatime[k+j]=QLabel(nextEntry.deltatime + ' min')
-                    self.generalLayout.addWidget(self.widgetListDeltatime[k+j], k + j + 2, 3)
-                else:
-                    self.widgetListName[k+j].setText(nextEntry.name)
-                    self.widgetListStopTrack[k + j].setText(self.stopList[i] + ", " + nextEntry.track)
-                    self.widgetListDirection[k + j].setText(nextEntry.direction)
-                    self.widgetListDeltatime[k + j].setText(nextEntry.deltatime + ' min')
-            k = k+len(data[self.stopList[abs(i)]])
