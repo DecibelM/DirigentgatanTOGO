@@ -42,7 +42,6 @@ class TOGO_UI(QMainWindow):
             for j in range(0,len(data[self.stopList[i]])):
                 nextEntry=data[self.stopList[i]][j]
                 if self.widgetListName[k+j] is None:
-                    print("None",k,j)
                     self.widgetListName[k+j]=QLabel(nextEntry.name)
                     self.generalLayout.addWidget(self.widgetListName[k + j], k + j + 2, 0)
                     self.widgetListStopTrack[k+j]=QLabel(self.stopList[i]+", "+nextEntry.track)
