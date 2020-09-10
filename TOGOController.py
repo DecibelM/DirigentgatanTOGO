@@ -13,5 +13,3 @@ class TOGOController:
     def update(self):
         data = self.model.update()
         self._view.updateView(data)
-        #self._view.createTable(data)
-        #hej

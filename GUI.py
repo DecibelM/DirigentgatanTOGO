@@ -1,11 +1,11 @@
 # 1. Import `QApplication` and all the required widgets
 from PyQt5.QtWidgets import QLabel
-from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableWidget,QTableWidgetItem,QVBoxLayout
 from PyQt5 import QtCore
+from PyQt5.QtWidgets import QMainWindow, QWidget
 
 class TOGO_UI(QMainWindow):
     #Constructor for TOGO_UI
@@ -61,6 +61,22 @@ class TOGO_UI(QMainWindow):
         self.generalLayout.addWidget(self.updateButton, 0, 3)
 
     def updateView(self, data):
+        for j in range(0,len(data)):
+            nextEntry=data[j]
+            if self.widgetListName[j] is None:
+                self.widgetListName[j]=QLabel(nextEntry.name)
+                self.generalLayout.addWidget(self.widgetListName[j], j + 2, 0)
+                self.widgetListStopTrack[j]=QLabel(nextEntry.stop +", "+nextEntry.track)
+                self.generalLayout.addWidget(self.widgetListStopTrack[j], j + 2, 1)
+                self.widgetListDirection[j]=QLabel(nextEntry.direction)
+                self.generalLayout.addWidget(self.widgetListDirection[j], j + 2, 2)
+                self.widgetListDeltatime[j]=QLabel(nextEntry.deltatime + ' min')
+                self.generalLayout.addWidget(self.widgetListDeltatime[j], j + 2, 3)
+            else:
+                self.widgetListName[j].setText(nextEntry.name)
+                self.widgetListStopTrack[j].setText(nextEntry.stop + ", " + nextEntry.track)
+                self.widgetListDirection[j].setText(nextEntry.direction)
+                self.widgetListDeltatime[j].setText(nextEntry.deltatime + ' min')
         k=0
         for i in range(0,len(self.stopList)):
             for j in range(0,len(data[self.stopList[i]])):
