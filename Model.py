@@ -57,7 +57,6 @@ class Model():
                       " - Now: " + str(now) +
                       ", Om " + departureObject.deltatime + " minuter")
 
-
     def update(self):
         depDict = {}
 

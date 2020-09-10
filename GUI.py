@@ -3,7 +3,9 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableWidget,QTableWidgetItem,QVBoxLayout
+from PyQt5 import QtCore
 
 class TOGO_UI(QMainWindow):
     #Constructor for TOGO_UI
@@ -12,7 +14,8 @@ class TOGO_UI(QMainWindow):
         super().__init__()
         # Set some main window's properties
         self.stopList = stopList
-        self.setWindowTitle(self.stopList[0]+' and '+self.stopList[1])
+        self.setWindowTitle('Travel')
+        self.setStyleSheet("background-color: white;")
         self.generalLayout = QGridLayout()
         # Set the central widget
         self._centralWidget = QWidget(self)
@@ -21,12 +24,24 @@ class TOGO_UI(QMainWindow):
         self._createDisplay()
 
     def _createDisplay(self):
-        self.generalLayout.addWidget(QLabel('<p style="text-align:center;"><h1>TOGO</h1></p>'), 0, 0, 1, 3)
+        image = QLabel()
+        pixmap = QPixmap('Travel_logga.png')
+        image.setPixmap(pixmap.scaled(image.size()*0.5, QtCore.Qt.KeepAspectRatio))
 
-        self.generalLayout.addWidget(QLabel('Linje'), 1, 0)
-        self.generalLayout.addWidget(QLabel('Hållplats'), 1, 1)
-        self.generalLayout.addWidget(QLabel('Mot'), 1, 2)
-        self.generalLayout.addWidget(QLabel('Om'), 1, 3)
+        self.generalLayout.addWidget(image, 0, 0, 1, 2)
+
+        label1 = QLabel('<h2>Linje</h2>')
+        self.generalLayout.addWidget(label1, 1, 0)
+
+        self.generalLayout.addWidget(QLabel('<h2>Hållplats</h2>'), 1, 1)
+        self.generalLayout.addWidget(QLabel('<h2>Mot</h2>'), 1, 2)
+        label4 = QLabel('<h2>Om</h2>')
+        self.generalLayout.addWidget(label4, 1, 3)
+
+        label4.setStyleSheet("padding-top : 10px;"
+                    "padding-left:0px;"
+                    "padding-right:5px;"
+                    "padding-bottom :10px;")
 
         self.widgetListName = [None] * 20 * len(self.stopList) # Max 20 entries per stop
         self.widgetListStopTrack = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
@@ -34,6 +49,15 @@ class TOGO_UI(QMainWindow):
         self.widgetListDeltatime = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
 
         self.updateButton = QPushButton('Uppdatera')
+        self.updateButton.setStyleSheet("QPushButton"
+                             "{"
+                             "background-color : lightblue;"
+                             "}"
+                             "QPushButton::pressed"
+                             "{"
+                             "background-color : red;"
+                             "}"
+                             )
         self.generalLayout.addWidget(self.updateButton, 0, 3)
 
     def updateView(self, data):
@@ -51,7 +75,6 @@ class TOGO_UI(QMainWindow):
                     self.widgetListDeltatime[k+j]=QLabel(nextEntry.deltatime + ' min')
                     self.generalLayout.addWidget(self.widgetListDeltatime[k+j], k + j + 2, 3)
                 else:
-                    print("else",k,j)
                     self.widgetListName[k+j].setText(nextEntry.name)
                     self.widgetListStopTrack[k + j].setText(self.stopList[i] + ", " + nextEntry.track)
                     self.widgetListDirection[k + j].setText(nextEntry.direction)
