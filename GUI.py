@@ -37,11 +37,12 @@ class TOGO_UI(QMainWindow):
         self.generalLayout.addWidget(self.updateButton, 0, 3)
 
     def updateView(self, data):
+        k=0
         for i in range(0,len(self.stopList)):
-            k=i*len(data[self.stopList[i]])
             for j in range(0,len(data[self.stopList[i]])):
                 nextEntry=data[self.stopList[i]][j]
                 if self.widgetListName[k+j] is None:
+                    print("None",k,j)
                     self.widgetListName[k+j]=QLabel(nextEntry.name)
                     self.generalLayout.addWidget(self.widgetListName[k + j], k + j + 2, 0)
                     self.widgetListStopTrack[k+j]=QLabel(self.stopList[i]+", "+nextEntry.track)
@@ -51,7 +52,9 @@ class TOGO_UI(QMainWindow):
                     self.widgetListDeltatime[k+j]=QLabel(nextEntry.deltatime + ' min')
                     self.generalLayout.addWidget(self.widgetListDeltatime[k+j], k + j + 2, 3)
                 else:
+                    print("else",k,j)
                     self.widgetListName[k+j].setText(nextEntry.name)
                     self.widgetListStopTrack[k + j].setText(self.stopList[i] + ", " + nextEntry.track)
                     self.widgetListDirection[k + j].setText(nextEntry.direction)
                     self.widgetListDeltatime[k + j].setText(nextEntry.deltatime + ' min')
+            k = k+len(data[self.stopList[abs(i)]])
