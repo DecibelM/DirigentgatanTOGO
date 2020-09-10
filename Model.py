@@ -25,16 +25,14 @@ class Model():
                 deltatime=deltastr + self.get_deltatime(time, now)
                 prevDepartureObject = self.findDeparture(departure, departureObjectList)
                 if prevDepartureObject == None:
-                    departureObject = Departure(departure['name'], time , departure['direction'],departure['track'],
-                                                stop, departure['fgColor'],departure['bgColor'], deltatime)
+                    departureObject = Departure(departure['name'], time , departure['direction'],stop,
+                                                departure['track'],departure['fgColor'],departure['bgColor'], deltatime)
                     departureObjectList.append(departureObject)
                 else:
                     prevDepartureObject.deltatime += deltatime
-        departureObjectList.sort(key=lambda x: x.time)
         return departureObjectList
 
     def findDeparture(self, departure, departureObjectList):
-
         for otherDeparture in departureObjectList:
             if otherDeparture.name == departure['name'] and otherDeparture.track == departure['track'] and \
                     otherDeparture.direction == departure['direction']:
@@ -54,40 +52,24 @@ class Model():
                 print("Avgång: " + departureObject.name +
                       ", Mot: " + departureObject.direction +
                       ", Hållplats, Läge: " + departureObject.stop +", "+ departureObject.track+
-                      ", Tid: " + str(departureObject.time) +
-                      " - Now: " + str(now) +
+                      #", Tid: " + str(departureObject.time) +
+                      #" - Now: " + str(now) +
                       ", Om " + departureObject.deltatime + " minuter")
 
 
     def update(self):
-        depDict = {}
+        depList = []
 
         for stop in self.stopList:
             departures = self.client.getDepartures(stop)
             departureList = self.getDeparturesList(departures,stop)
-            depDict[stop] = departureList
+            depList.extend(departureList)
+        depList.sort(key=lambda x: x.time)
 
-        return depDict
+        return depList
 
 if __name__ == '__main__':
-    #stopList = ['Lantmilsgatan', 'Fyrktorget']
-    #model = Model(stopList)
-    #model.client.getAccess()
-    #departures = model.client.getDepartures(stopList[0])
-    #departure1 = Departure('Spårvagn 1', '13:00', 'Tynnered', 'B', '#FFFFFF', '#FFFFFF', 'deltatime')
-    #departure2 = Departure('Spårvagn 7', '13:00', 'Tynnered', 'B', '#FFFFFF', '#FFFFFF', 'deltatime')
-    #departure3 = Departure('Spårvagn 1', '13:00', 'Östra Sjukhuset', 'A', '#FFFFFF', '#FFFFFF', 'deltatime')
-    #departureObjectList = [departure1, departure2, departure3]
-    #for departure in departures['DepartureBoard']['Departure']:
-    #    result = model.findDeparture(departure, departureObjectList)
-    #    if result != None:
-    #        print(result.name)
-    #        print(result.track)
-    #    else:
-    #        print(result)
-
     stopList = ['Lindholmenspiren', 'Lindholmen']
     model = Model(stopList)
     data = model.update()
-    print("all entries at stop")
-    model.printDepartures(data['Lindholmen'])
+    #model.printDepartures(data)
