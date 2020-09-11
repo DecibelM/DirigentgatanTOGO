@@ -3,15 +3,17 @@
 import requests
 import base64
 from datetime import datetime
+from PyQt5.QtCore import QTimer
 
 class Client:
 
     # USER INPUT
     def __init__(self):
         self.KEY = 'zRglBR_EmPfQ60PknwY_Ja5WOFMa'
-        self.SECRET = 'INSERT_SECRET_HERE'
+        self.SECRET = 'GhqGMLcJ9rwdPSIStI03NLUNKQ4a'
         self.ACCESS_TOKEN = ''
         self.getAccess()
+        self.automatic_getAccessToken()
 
     def getAccess(self):
         # Step 1: Get Access token
@@ -46,3 +48,11 @@ class Client:
         r = requests.get(url, headers=head, params=parameters)
         tmp = r.json()
         return tmp
+
+    def automatic_getAccessToken(self):
+        # creating a timer object
+        self.timer = QTimer()
+        # adding action to timer
+        self.timer.timeout.connect(self.getAccess)
+        # update the timer every 50 min = 5e3 sec = 5e6 msec
+        self.timer.start(5e6)
