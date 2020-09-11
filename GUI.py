@@ -47,7 +47,7 @@ class TOGO_UI(QMainWindow):
         self.widgetListStopTrack = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
         self.widgetListDirection = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
         self.widgetListDeltatime = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
-
+        """
         self.updateButton = QPushButton('Uppdatera')
         self.updateButton.setStyleSheet("QPushButton"
                              "{"
@@ -59,10 +59,11 @@ class TOGO_UI(QMainWindow):
                              "}"
                              )
         self.generalLayout.addWidget(self.updateButton, 0, 3)
+        """
 
         # creating a label object for time and adding it to the display
         self.timelabel = QLabel()
-        self.generalLayout.addWidget(self.timelabel,0,2)
+        self.generalLayout.addWidget(self.timelabel,0,3)
 
     def getQTime(self):
         #Gets current time and sets the time in GUI
