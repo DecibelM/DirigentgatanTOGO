@@ -10,7 +10,7 @@ class Client:
     # USER INPUT
     def __init__(self):
         self.KEY = 'zRglBR_EmPfQ60PknwY_Ja5WOFMa'
-        self.SECRET = 'GhqGMLcJ9rwdPSIStI03NLUNKQ4a'
+        self.SECRET = 'Insert secret here'
         self.ACCESS_TOKEN = ''
         self.getAccess()
         self.automatic_getAccessToken()
