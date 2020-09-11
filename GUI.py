@@ -68,8 +68,14 @@ class TOGO_UI(QMainWindow):
     def getQTime(self):
         #Gets current time and sets the time in GUI
         qttime = QTime.currentTime()
-        label_time = qttime.toString('hh:mm')
+        label_time = '<h1>' + qttime.toString('hh:mm') + '</h1>'
         self.timelabel.setText(label_time)
+        self.timelabel.setAlignment(QtCore.Qt.AlignRight)
+        self.timelabel.setStyleSheet("padding-top : 15px;"
+                             "padding-left:0px;"
+                             "padding-right:30px;"
+                             "padding-bottom :0px;"
+                                     "font-size: 22px")
 
     def updateView(self, data):
         self.getQTime()
