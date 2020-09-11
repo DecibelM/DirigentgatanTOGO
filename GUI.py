@@ -2,11 +2,10 @@
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableWidget,QTableWidgetItem,QVBoxLayout
+from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QWidget
-from PyQt5.QtCore import QTimer, QTime, Qt
+from PyQt5.QtCore import QTime
 
 class TOGO_UI(QMainWindow):
     #Constructor for TOGO_UI
