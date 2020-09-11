@@ -1,16 +1,13 @@
-# 1. Import `QApplication` and all the required widgets
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QWidget
 from PyQt5.QtCore import QTime
 
 class TOGO_UI(QMainWindow):
-    #Constructor for TOGO_UI
+    """Constructor for TOGO_UI"""
     def __init__(self,stopList):
-        """View initializer."""
         super().__init__()
         # Set some main window's properties
         self.stopList = stopList
@@ -23,14 +20,19 @@ class TOGO_UI(QMainWindow):
         self._centralWidget.setLayout(self.generalLayout)
         self._createDisplay()
 
+    """Creates the initial display"""
     def _createDisplay(self):
+        #Adds the image
         image = QLabel()
         pixmap = QPixmap('Travel_logga_color.png')
         image.setPixmap(pixmap.scaled(image.size()*0.5, QtCore.Qt.KeepAspectRatio))
         self.generalLayout.addWidget(image, 0, 0, 1, 2)
 
+        #Style sheet for formatting headlines.
         styleSheet = "padding-top: 10px; padding-left:-5px; padding-right:5px; " \
                         "padding-bottom :10px; color: #785456"
+
+        #Creating and formatting of label headlines
         label1 = QLabel('<h2>Linje</h2>')
         label2 = QLabel('<h2>Hållplats</h2>')
         label3 = QLabel('<h2>Mot</h2>')
@@ -54,8 +56,8 @@ class TOGO_UI(QMainWindow):
         self.timelabel = QLabel()
         self.generalLayout.addWidget(self.timelabel,0,3)
 
+    """Gets current time and sets the time in GUI"""
     def getQTime(self):
-        #Gets current time and sets the time in GUI
         qttime = QTime.currentTime()
         label_time = '<h1>' + qttime.toString('hh:mm') + '</h1>'
         self.timelabel.setText(label_time)
@@ -67,6 +69,7 @@ class TOGO_UI(QMainWindow):
                                      "font-size: 22px;"
                                      "color: #6F8089")
 
+    """Updates the view with the latest data from the database"""
     def updateView(self, data):
         self.getQTime()
         for j in range(0,len(data)):
