@@ -25,23 +25,25 @@ class TOGO_UI(QMainWindow):
 
     def _createDisplay(self):
         image = QLabel()
-        pixmap = QPixmap('Travel_logga.png')
+        pixmap = QPixmap('Travel_logga_color.png')
         image.setPixmap(pixmap.scaled(image.size()*0.5, QtCore.Qt.KeepAspectRatio))
-
         self.generalLayout.addWidget(image, 0, 0, 1, 2)
 
+        styleSheet = "padding-top: 10px; padding-left:-5px; padding-right:5px; " \
+                        "padding-bottom :10px; color: #785456"
         label1 = QLabel('<h2>Linje</h2>')
-        self.generalLayout.addWidget(label1, 1, 0)
-
-        self.generalLayout.addWidget(QLabel('<h2>Hållplats</h2>'), 1, 1)
-        self.generalLayout.addWidget(QLabel('<h2>Mot</h2>'), 1, 2)
+        label2 = QLabel('<h2>Hållplats</h2>')
+        label3 = QLabel('<h2>Mot</h2>')
         label4 = QLabel('<h2>Om</h2>')
+        self.generalLayout.addWidget(label1, 1, 0)
+        self.generalLayout.addWidget(label2, 1, 1)
+        self.generalLayout.addWidget(label3, 1, 2)
         self.generalLayout.addWidget(label4, 1, 3)
 
-        label4.setStyleSheet("padding-top : 10px;"
-                    "padding-left:0px;"
-                    "padding-right:5px;"
-                    "padding-bottom :10px;")
+        label1.setStyleSheet(styleSheet)
+        label2.setStyleSheet(styleSheet)
+        label3.setStyleSheet(styleSheet)
+        label4.setStyleSheet(styleSheet)
 
         self.widgetListName = [None] * 20 * len(self.stopList) # Max 20 entries per stop
         self.widgetListStopTrack = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
@@ -62,7 +64,8 @@ class TOGO_UI(QMainWindow):
                              "padding-left:0px;"
                              "padding-right:30px;"
                              "padding-bottom :0px;"
-                                     "font-size: 22px")
+                                     "font-size: 22px;"
+                                     "color: #6F8089")
 
     def updateView(self, data):
         self.getQTime()
