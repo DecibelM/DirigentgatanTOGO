@@ -2,11 +2,10 @@
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableWidget,QTableWidgetItem,QVBoxLayout
+from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QWidget
-from PyQt5.QtCore import QTimer, QTime, Qt
+from PyQt5.QtCore import QTime
 
 class TOGO_UI(QMainWindow):
     #Constructor for TOGO_UI
@@ -62,14 +61,14 @@ class TOGO_UI(QMainWindow):
         self.generalLayout.addWidget(self.updateButton, 0, 3)
 
         # creating a label object for time and adding it to the display
-        self.Qtimelabel = QLabel()
-        self.generalLayout.addWidget(self.Qtimelabel,0,2)
+        self.timelabel = QLabel()
+        self.generalLayout.addWidget(self.timelabel,0,2)
 
     def getQTime(self):
         #Gets current time and sets the time in GUI
         qttime = QTime.currentTime()
         label_time = qttime.toString('hh:mm')
-        self.Qtimelabel.setText(label_time)
+        self.timelabel.setText(label_time)
 
     def updateView(self, data):
         self.getQTime()
