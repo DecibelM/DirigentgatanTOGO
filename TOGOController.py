@@ -7,8 +7,7 @@ class TOGOController:
         """Controller initializer."""
         self._view = view
         self.model = model
-        # Connect signals and slots
-        #self._view.updateButton.clicked.connect(partial(self.update))
+
         self.update()
         self.automaticUpdate()
 

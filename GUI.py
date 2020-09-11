@@ -47,19 +47,6 @@ class TOGO_UI(QMainWindow):
         self.widgetListStopTrack = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
         self.widgetListDirection = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
         self.widgetListDeltatime = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
-        """
-        self.updateButton = QPushButton('Uppdatera')
-        self.updateButton.setStyleSheet("QPushButton"
-                             "{"
-                             "background-color : lightblue;"
-                             "}"
-                             "QPushButton::pressed"
-                             "{"
-                             "background-color : white;"
-                             "}"
-                             )
-        self.generalLayout.addWidget(self.updateButton, 0, 3)
-        """
 
         # creating a label object for time and adding it to the display
         self.timelabel = QLabel()
