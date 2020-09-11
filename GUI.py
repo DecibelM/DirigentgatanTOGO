@@ -67,7 +67,7 @@ class TOGO_UI(QMainWindow):
     def getQTime(self):
         #Gets current time and sets the time in GUI
         qttime = QTime.currentTime()
-        label_time = qttime.toString('hh:mm:ss')
+        label_time = qttime.toString('hh:mm')
         self.timelabel.setText(label_time)
 
     def updateView(self, data):
