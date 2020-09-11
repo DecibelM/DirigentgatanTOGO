@@ -62,14 +62,14 @@ class TOGO_UI(QMainWindow):
         self.generalLayout.addWidget(self.updateButton, 0, 3)
 
         # creating a label object for time and adding it to the display
-        self.Qtimelabel = QLabel()
-        self.generalLayout.addWidget(self.Qtimelabel,0,2)
+        self.timelabel = QLabel()
+        self.generalLayout.addWidget(self.timelabel,0,2)
 
     def getQTime(self):
         #Gets current time and sets the time in GUI
         qttime = QTime.currentTime()
-        label_time = qttime.toString('hh:mm')
-        self.Qtimelabel.setText(label_time)
+        label_time = qttime.toString('hh:mm:ss')
+        self.timelabel.setText(label_time)
 
     def updateView(self, data):
         self.getQTime()
