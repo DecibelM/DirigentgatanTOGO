@@ -1,16 +1,13 @@
-# 1. Import `QApplication` and all the required widgets
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QWidget
 from PyQt5.QtCore import QTime
 
 class TOGO_UI(QMainWindow):
-    #Constructor for TOGO_UI
+    """Constructor for TOGO_UI"""
     def __init__(self,stopList):
-        """View initializer."""
         super().__init__()
         # Set some main window's properties
         self.stopList = stopList
@@ -23,53 +20,56 @@ class TOGO_UI(QMainWindow):
         self._centralWidget.setLayout(self.generalLayout)
         self._createDisplay()
 
+    """Creates the initial display"""
     def _createDisplay(self):
+        #Adds the image
         image = QLabel()
-        pixmap = QPixmap('Travel_logga.png')
+        pixmap = QPixmap('Travel_logga_color.png')
         image.setPixmap(pixmap.scaled(image.size()*0.5, QtCore.Qt.KeepAspectRatio))
-
         self.generalLayout.addWidget(image, 0, 0, 1, 2)
 
-        label1 = QLabel('<h2>Linje</h2>')
-        self.generalLayout.addWidget(label1, 1, 0)
+        #Style sheet for formatting headlines.
+        styleSheet = "padding-top: 10px; padding-left:-5px; padding-right:5px; " \
+                        "padding-bottom :10px; color: #785456"
 
-        self.generalLayout.addWidget(QLabel('<h2>Hållplats</h2>'), 1, 1)
-        self.generalLayout.addWidget(QLabel('<h2>Mot</h2>'), 1, 2)
+        #Creating and formatting of label headlines
+        label1 = QLabel('<h2>Linje</h2>')
+        label2 = QLabel('<h2>Hållplats</h2>')
+        label3 = QLabel('<h2>Mot</h2>')
         label4 = QLabel('<h2>Om</h2>')
+        self.generalLayout.addWidget(label1, 1, 0)
+        self.generalLayout.addWidget(label2, 1, 1)
+        self.generalLayout.addWidget(label3, 1, 2)
         self.generalLayout.addWidget(label4, 1, 3)
 
-        label4.setStyleSheet("padding-top : 10px;"
-                    "padding-left:0px;"
-                    "padding-right:5px;"
-                    "padding-bottom :10px;")
+        label1.setStyleSheet(styleSheet)
+        label2.setStyleSheet(styleSheet)
+        label3.setStyleSheet(styleSheet)
+        label4.setStyleSheet(styleSheet)
 
         self.widgetListName = [None] * 20 * len(self.stopList) # Max 20 entries per stop
         self.widgetListStopTrack = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
         self.widgetListDirection = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
         self.widgetListDeltatime = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
 
-        self.updateButton = QPushButton('Uppdatera')
-        self.updateButton.setStyleSheet("QPushButton"
-                             "{"
-                             "background-color : lightblue;"
-                             "}"
-                             "QPushButton::pressed"
-                             "{"
-                             "background-color : white;"
-                             "}"
-                             )
-        self.generalLayout.addWidget(self.updateButton, 0, 3)
-
         # creating a label object for time and adding it to the display
         self.timelabel = QLabel()
-        self.generalLayout.addWidget(self.timelabel,0,2)
+        self.generalLayout.addWidget(self.timelabel,0,3)
 
+    """Gets current time and sets the time in GUI"""
     def getQTime(self):
-        #Gets current time and sets the time in GUI
         qttime = QTime.currentTime()
-        label_time = qttime.toString('hh:mm')
+        label_time = '<h1>' + qttime.toString('hh:mm') + '</h1>'
         self.timelabel.setText(label_time)
+        self.timelabel.setAlignment(QtCore.Qt.AlignRight)
+        self.timelabel.setStyleSheet("padding-top : 15px;"
+                             "padding-left:0px;"
+                             "padding-right:30px;"
+                             "padding-bottom :0px;"
+                                     "font-size: 22px;"
+                                     "color: #6F8089")
 
+    """Updates the view with the latest data from the database"""
     def updateView(self, data):
         self.getQTime()
         for j in range(0,len(data)):
