@@ -20,17 +20,27 @@ class Model():
                 deltastr=" "
             else:
                 time = datetime.strptime(departure['date'] + " " + departure['time'], "%Y-%m-%d %H:%M")
-                deltastr="ca "
+                deltastr=" ca "
+
+            if departure['name']=="286 Älvsnabbare":
+                departure['name']="Färja 286"
+            elif departure['name']=="285 Älvsnabben":
+                departure['name']="Färja 285"
 
             if time >= now:
-                deltatime=deltastr + self.get_deltatime(time, now)
+                deltatimefloat=self.get_deltatime(time, now)
+                deltatime=deltastr + str(deltatimefloat)
                 prevDepartureObject = self.findDeparture(departure, departureObjectList)
                 if prevDepartureObject == None:
                     departureObject = Departure(departure['name'], time , departure['direction'],stop,
                                                 departure['track'],departure['fgColor'],departure['bgColor'], deltatime)
                     departureObjectList.append(departureObject)
-                else:
+                # If the string is 10 or less add deltatime
+                elif len(prevDepartureObject.deltatime)<11:
                     prevDepartureObject.deltatime += deltatime
+                # Use the commented part if we only want to show departures within 30 min
+                # elif deltatimefloat < 30:
+                #     prevDepartureObject.deltatime += deltatime
         return departureObjectList
 
     def findDeparture(self, departure, departureObjectList):
@@ -43,7 +53,7 @@ class Model():
     def get_deltatime(self,time,now):
         difference = time - now
         noSeconds = difference.seconds
-        deltatime = str(round(noSeconds / 60.0))
+        deltatime = round(noSeconds / 60.0)
         return deltatime
 
     def printDepartures(self,departureList):
