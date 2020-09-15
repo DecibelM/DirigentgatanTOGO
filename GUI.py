@@ -47,10 +47,11 @@ class TOGO_UI(QMainWindow):
         label3.setStyleSheet(styleSheet)
         label4.setStyleSheet(styleSheet)
 
-        self.widgetListName = [None] * 20 * len(self.stopList) # Max 20 entries per stop
-        self.widgetListStopTrack = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
-        self.widgetListDirection = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
-        self.widgetListDeltatime = [None] * 20 * len(self.stopList)  # Max 20 entries per stop
+        listLen=20 * len(self.stopList) # Max 20 entries per stop
+        self.widgetListName = [None] * listLen
+        self.widgetListStopTrack = [None] * listLen
+        self.widgetListDirection = [None] * listLen
+        self.widgetListDeltatime = [None] * listLen
 
         # creating a label object for time and adding it to the display
         self.timelabel = QLabel()
@@ -88,3 +89,22 @@ class TOGO_UI(QMainWindow):
                 self.widgetListStopTrack[j].setText(nextEntry.stop + ", " + nextEntry.track)
                 self.widgetListDirection[j].setText(nextEntry.direction)
                 self.widgetListDeltatime[j].setText(nextEntry.deltatime + ' min')
+        for i in range(len(data),len(self.widgetListName)):
+            if self.widgetListName[i] is not None:
+                self.generalLayout.removeWidget(self.widgetListName[i])
+                self.widgetListName[i].deleteLater()
+                self.widgetListName[i] = None
+                self.generalLayout.removeWidget(self.widgetListStopTrack[i])
+                self.widgetListStopTrack[i].deleteLater()
+                self.widgetListStopTrack[i] = None
+                self.generalLayout.removeWidget(self.widgetListDirection[i])
+                self.widgetListDirection[i].deleteLater()
+                self.widgetListDirection[i] = None
+                self.generalLayout.removeWidget(self.widgetListDeltatime[i])
+                self.widgetListDeltatime[i].deleteLater()
+                self.widgetListDeltatime[i] = None
+
+                #self.generalLayout.removeWidget(self.widgetListName[i])
+                #self.generalLayout.removeWidget(self.widgetListStopTrack[i])
+                #self.generalLayout.removeWidget(self.widgetListDirection[i])
+                #self.generalLayout.removeWidget(self.widgetListDeltatime[i])
