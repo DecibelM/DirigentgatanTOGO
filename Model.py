@@ -67,12 +67,11 @@ class Model():
     def update(self):
         depList = []
 
-        for i in range(0,2):
+        for i in range(0,len(self.stopList)):
             departures = self.client.getDepartures(self.stopIDList[i])
-            departureList = self.getDeparturesList(departures,self.stopList[i])
+            departureList = self.getDeparturesList(departures, self.stopList[i])
             depList.extend(departureList)
         depList.sort(key=lambda x: x.time)
-
         return depList
 
 if __name__ == '__main__':
