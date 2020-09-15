@@ -8,3 +8,4 @@ class Departure:
         self.fgColor = fgColor
         self.bgColor = bgColor
         self.deltatime = deltatime
+
