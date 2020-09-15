@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QMainWindow, QWidget
+from PyQt5.QtWidgets import QMainWindow, QWidget,QErrorMessage
 from PyQt5.QtCore import QTime
 
 class TOGO_UI(QMainWindow):
@@ -57,6 +57,8 @@ class TOGO_UI(QMainWindow):
         self.timelabel = QLabel()
         self.generalLayout.addWidget(self.timelabel,0,3)
 
+        self.error_dialog = QErrorMessage()
+
     """Gets current time and sets the time in GUI"""
     def getQTime(self):
         qttime = QTime.currentTime()
@@ -104,7 +106,4 @@ class TOGO_UI(QMainWindow):
                 self.widgetListDeltatime[i].deleteLater()
                 self.widgetListDeltatime[i] = None
 
-                #self.generalLayout.removeWidget(self.widgetListName[i])
-                #self.generalLayout.removeWidget(self.widgetListStopTrack[i])
-                #self.generalLayout.removeWidget(self.widgetListDirection[i])
-                #self.generalLayout.removeWidget(self.widgetListDeltatime[i])
+

@@ -10,7 +10,7 @@ class Client:
     # USER INPUT
     def __init__(self):
         self.KEY = 'zRglBR_EmPfQ60PknwY_Ja5WOFMa'
-        self.SECRET = 'INSERT SECRET HERE'
+        self.SECRET = 'INSERT KEY HERE'
         self.ACCESS_TOKEN = ''
         self.getAccess()
         self.automatic_getAccessToken()
@@ -22,7 +22,7 @@ class Client:
         head = {'Authorization': 'Basic ' + base64.b64encode((self.KEY + ':' + self.SECRET).encode()).decode(),
                 'Content-Type': 'application/x-www-form-urlencoded'}
         r_i=0
-        while r_i<3:
+        while r_i<4:
             try:
                 r = requests.post(url, headers=head, params=parameters)
                 tmp = r.json()
@@ -69,6 +69,8 @@ class Client:
             except ValueError:
                 r_i = r_i + 1
                 print("Error raised with status code ", r.status_code)
+                if r_i==4:
+                    return "Error"
         return tmp
 
     def automatic_getAccessToken(self):
@@ -78,3 +80,4 @@ class Client:
         self.timer.timeout.connect(self.getAccess)
         # update the timer every 50 min = 5e3 sec = 5e6 msec
         self.timer.start(5e6)
+

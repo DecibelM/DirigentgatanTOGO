@@ -79,6 +79,8 @@ class Model():
 
         for i in range(0,len(self.stopList)):
             departures = self.client.getDepartures(self.stopIDList[i])
+            if departures == "Error":
+                return "Error"
             departureList = self.getDeparturesList(departures, self.stopList[i])
             depList.extend(departureList)
         depList.sort(key=lambda x: x.time)

@@ -7,13 +7,17 @@ class TOGOController:
         """Controller initializer."""
         self._view = view
         self.model = model
-
+        self.data = ""
         self.update()
         self.automaticUpdate()
 
     def update(self):
         data = self.model.update()
-        self._view.updateView(data)
+        if data=="Error":
+            self._view.updateView(self.data)
+        else:
+            self.data=data
+            self._view.updateView(self.data)
 
     def automaticUpdate(self):
         # creating a timer object
@@ -22,3 +26,4 @@ class TOGOController:
         self.timer.timeout.connect(self.update)
         # update the timer every 30 second
         self.timer.start(10000)
+
