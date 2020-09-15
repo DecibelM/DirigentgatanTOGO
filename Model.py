@@ -7,6 +7,7 @@ class Model():
     def __init__(self,stopList):
         self.client = Client()
         self.stopList = stopList
+        self.stopIDList = self.getStopID(stopList)
 
     def getDeparturesList(self,departures,stop):
         rawDepList = departures['DepartureBoard']['Departure']
@@ -56,15 +57,21 @@ class Model():
                       #" - Now: " + str(now) +
                       ", Om " + departureObject.deltatime + " minuter")
 
+    def getStopID(self, stopList):
+        stopIDList = []
+        for stop in self.stopList:
+            stopId = self.client.getStopID(stop)
+            stopIDList.append(stopId)
+        return stopIDList
+
     def update(self):
         depList = []
 
-        for stop in self.stopList:
-            departures = self.client.getDepartures(stop)
-            departureList = self.getDeparturesList(departures,stop)
+        for i in range(0,len(self.stopList)):
+            departures = self.client.getDepartures(self.stopIDList[i])
+            departureList = self.getDeparturesList(departures, self.stopList[i])
             depList.extend(departureList)
         depList.sort(key=lambda x: x.time)
-
         return depList
 
 if __name__ == '__main__':

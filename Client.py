@@ -50,9 +50,9 @@ class Client:
         STOP_ID = tmp['LocationList']['StopLocation'][0]['id']
         return STOP_ID
 
-    def getDepartures(self, stop):
+    def getDepartures(self, STOP_ID):
         # self.getAccess()
-        STOP_ID = self.getStopID(stop)
+        #STOP_ID = self.getStopID(stop)
 
         # Step 3: Get list of depatures using api method 'departureBoard'
         now = datetime.now()
