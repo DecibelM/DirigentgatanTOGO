@@ -10,8 +10,8 @@ class Client:
     # USER INPUT
     def __init__(self):
         self.KEY = 'zRglBR_EmPfQ60PknwY_Ja5WOFMa'
-        self.SECRET = 'insert_secret_here'
-        self.ACCESS_TOKEN = ' '
+        self.SECRET = 'INSERT SECRET HERE'
+        self.ACCESS_TOKEN = ''
         self.getAccess()
         self.automatic_getAccessToken()
 
@@ -21,18 +21,32 @@ class Client:
         url = 'https://api.vasttrafik.se/token'
         head = {'Authorization': 'Basic ' + base64.b64encode((self.KEY + ':' + self.SECRET).encode()).decode(),
                 'Content-Type': 'application/x-www-form-urlencoded'}
-
-        r = requests.post(url, headers=head, params=parameters)
-        tmp = r.json()
-        self.ACCESS_TOKEN = tmp['access_token']
+        r_i=0
+        while r_i<3:
+            try:
+                r = requests.post(url, headers=head, params=parameters)
+                tmp = r.json()
+                self.ACCESS_TOKEN = tmp['access_token']
+                break
+            except ValueError:
+                r_i=r_i+1
+                print("Error raised with status code ", r.status_code)
 
     def getStopID(self, STOP):
         # Step 2: Get stop id from stop string using api method 'location.name'
         url = 'https://api.vasttrafik.se/bin/rest.exe/v2/location.name'
         parameters = {'format': 'json', 'input': STOP}
         head = {'Authorization': 'Bearer ' + self.ACCESS_TOKEN}
-        r = requests.get(url, headers=head, params=parameters)
-        tmp = r.json()
+        #tmp=self.try_requestget(url, head, parameters)
+        r_i = 0
+        while r_i < 3:
+            try:
+                r = requests.get(url, headers=head, params=parameters)
+                tmp = r.json()
+                break
+            except ValueError:
+                r_i = r_i + 1
+                print("Error raised with status code ", r.status_code)
         STOP_ID = tmp['LocationList']['StopLocation'][0]['id']
         return STOP_ID
 
@@ -45,8 +59,16 @@ class Client:
         url = 'https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard'
         parameters = {'format': 'json', 'id': STOP_ID, 'date': now.strftime("%Y-%m-%d"), 'time': now.strftime("%H:%M")}
         head = {'Authorization': 'Bearer ' + self.ACCESS_TOKEN}
-        r = requests.get(url, headers=head, params=parameters)
-        tmp = r.json()
+        #tmp = self.try_requestget(url, head, parameters)
+        r_i = 0
+        while r_i < 3:
+            try:
+                r = requests.get(url, headers=head, params=parameters)
+                tmp = r.json()
+                break
+            except ValueError:
+                r_i = r_i + 1
+                print("Error raised with status code ", r.status_code)
         return tmp
 
     def automatic_getAccessToken(self):
