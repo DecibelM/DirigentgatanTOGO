@@ -107,11 +107,10 @@ class TOGO_UI(QMainWindow):
                 self.widgetListDeltatime[i] = None
 
     def handleErrors(self,errorInfo):
-        print(errorInfo)
         self.popupMessageBox.setWindowTitle("Pop-up Travel by Sigma")
-        self.popupMessageBox.setText("We're experiencing som errors, please have patience")
-        self.popupMessageBox.setIcon(QMessageBox.Critical) #Critical, Warning, Information, Question
+        self.popupMessageBox.setText("An error has occurred")
+        self.popupMessageBox.setIcon(QMessageBox.Warning) #Critical, Warning, Information, Question
         self.popupMessageBox.setDetailedText(str(errorInfo))
-        x = self.popupMessageBox.show()  # this will show the pop up
+        x = self.popupMessageBox.show()  # this will show the pop up, or use exec for stopping program in background
 
 

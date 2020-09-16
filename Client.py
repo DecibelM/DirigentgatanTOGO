@@ -7,7 +7,7 @@ from PyQt5.QtCore import QTimer
 class Client:
     def __init__(self):
         self.KEY = 'zRglBR_EmPfQ60PknwY_Ja5WOFMa'
-        self.SECRET = 'Insert key here'
+        self.SECRET = 'INSERT SECRET HERE'
         self.ACCESS_TOKEN = ''
         self.getAccess()
         self.automatic_getAccessToken()
@@ -18,31 +18,23 @@ class Client:
         url = 'https://api.vasttrafik.se/token'
         head = {'Authorization': 'Basic ' + base64.b64encode((self.KEY + ':' + self.SECRET).encode()).decode(),
                 'Content-Type': 'application/x-www-form-urlencoded'}
-        r_i=0
-        while r_i<4:
-            try:
-                r = requests.post(url, headers=head, params=parameters)
-                tmp = r.json()
-                self.ACCESS_TOKEN = tmp['access_token']
-                break
-            except ValueError:
-                r_i=r_i+1
-                print("In getAccess: r_i=",str(r_i)," Error raised with status code ", r.status_code)
+        try:
+            r = requests.post(url, headers=head, params=parameters)
+            tmp = r.json()
+            self.ACCESS_TOKEN = tmp['access_token']
+        except Exception as e:
+            print("In getAccess, exception raised: ", e, " Status code:", r.status_code)
 
     """Fetches the id associated with the provided stop name"""
     def getStopID(self, STOP):
         url = 'https://api.vasttrafik.se/bin/rest.exe/v2/location.name'
         parameters = {'format': 'json', 'input': STOP}
         head = {'Authorization': 'Bearer ' + self.ACCESS_TOKEN}
-        r_i = 0
-        while r_i < 3:
-            try:
-                r = requests.get(url, headers=head, params=parameters)
-                tmp = r.json()
-                break
-            except ValueError:
-                r_i = r_i + 1
-                print("In getStopID: r_i=",str(r_i)," Error raised with status code ", r.status_code)
+        try:
+            r = requests.get(url, headers=head, params=parameters)
+            tmp = r.json()
+        except Exception as e:
+            print("In getStopID, exception raised: ", e, " Status code:", r.status_code)
         STOP_ID = tmp['LocationList']['StopLocation'][0]['id']
         return STOP_ID
     """Fetches the list of departures (in JSON-format) from the given stop-id"""
@@ -51,17 +43,12 @@ class Client:
         url = 'https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard'
         parameters = {'format': 'json', 'id': STOP_ID, 'date': now.strftime("%Y-%m-%d"), 'time': now.strftime("%H:%M")}
         head = {'Authorization': 'Bearer ' + self.ACCESS_TOKEN}
-        r_i = 0
-        while r_i < 3:
-            try:
-                r = requests.get(url, headers=head, params=parameters)
-                tmp = r.json()
-                raise ValueError#break
-            except ValueError:
-                r_i = r_i + 1
-                print("In getDepartures: r_i=",str(r_i)," Error raised with status code ", r.status_code)
-                if r_i==3:
-                    return ["Error",r.status_code]
+        try:
+            r = requests.get(url, headers=head, params=parameters)
+            tmp = r.json()
+        except Exception as e:
+            print("In getDepartures, exception raised: ", e, " Status code:", r.status_code)
+            return ["Error"," in client.getDepartures",e,r.status_code]
         return tmp
     """Method creating a separate process for fetching the access token every 1 h"""
     def automatic_getAccessToken(self):
