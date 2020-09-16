@@ -5,6 +5,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QWidget,QErrorMessage
 from PyQt5.QtCore import QTime
 
+"""GUI class which inherits from QMainWindow"""
 class TOGO_UI(QMainWindow):
     """Constructor for TOGO_UI"""
     def __init__(self,stopList):
