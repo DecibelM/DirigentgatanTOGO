@@ -112,6 +112,6 @@ class TOGO_UI(QMainWindow):
         self.popupMessageBox.setText("We're experiencing som errors, please have patience")
         self.popupMessageBox.setIcon(QMessageBox.Critical) #Critical, Warning, Information, Question
         self.popupMessageBox.setDetailedText(str(errorInfo))
-        x = self.popupMessageBox.exec_()  # this will show our
+        x = self.popupMessageBox.show()  # this will show the pop up
 
 
