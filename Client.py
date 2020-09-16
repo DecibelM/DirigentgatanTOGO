@@ -30,7 +30,7 @@ class Client:
                 break
             except ValueError:
                 r_i=r_i+1
-                print("Error raised with status code ", r.status_code)
+                print("In getAccess: r_i=",str(r_i)," Error raised with status code ", r.status_code)
 
     def getStopID(self, STOP):
         # Step 2: Get stop id from stop string using api method 'location.name'
@@ -46,7 +46,7 @@ class Client:
                 break
             except ValueError:
                 r_i = r_i + 1
-                print("Error raised with status code ", r.status_code)
+                print("In getStopID: r_i=",str(r_i)," Error raised with status code ", r.status_code)
         STOP_ID = tmp['LocationList']['StopLocation'][0]['id']
         return STOP_ID
 
@@ -68,9 +68,9 @@ class Client:
                 break
             except ValueError:
                 r_i = r_i + 1
-                print("Error raised with status code ", r.status_code)
-                if r_i==4:
-                    return "Error"
+                print("In getDepartures: r_i=",str(r_i)," Error raised with status code ", r.status_code)
+                if r_i==3:
+                    return ["Error",r.status_code]
         return tmp
 
     def automatic_getAccessToken(self):
