@@ -1,20 +1,24 @@
 from functools import partial
 from PyQt5.QtCore import QTimer
 
+"""Controller class, GUI and model are controlled from here."""
 class TOGOController:
     """PyCalc Controller class."""
     def __init__(self, model, view):
         """Controller initializer."""
         self._view = view
         self.model = model
-
         self.update()
         self.automaticUpdate()
 
+    """Fetches the updated data from the model
+    and passes it to the view."""
     def update(self):
         data = self.model.update()
         self._view.updateView(data)
 
+    """Starts a separate process for the updating of the view.
+    It repeats every 30 seconds."""
     def automaticUpdate(self):
         # creating a timer object
         self.timer = QTimer()
