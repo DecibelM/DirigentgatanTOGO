@@ -7,7 +7,7 @@ from PyQt5.QtCore import QTimer
 class Client:
     def __init__(self):
         self.KEY = 'zRglBR_EmPfQ60PknwY_Ja5WOFMa'
-        self.SECRET = 'INSERTSECRETHERE'
+        self.SECRET = 'Insert key here'
         self.ACCESS_TOKEN = ''
         self.getAccess()
         self.automatic_getAccessToken()
@@ -56,7 +56,7 @@ class Client:
             try:
                 r = requests.get(url, headers=head, params=parameters)
                 tmp = r.json()
-                break
+                raise ValueError#break
             except ValueError:
                 r_i = r_i + 1
                 print("In getDepartures: r_i=",str(r_i)," Error raised with status code ", r.status_code)

@@ -19,6 +19,7 @@ class TOGOController:
         if "Error" in data:
             self._view.updateView(self.data)
             print("In controller: Error with status code " + str(data[1]))
+            self._view.handleErrors(data)
         else:
             self.data=data
             self._view.updateView(self.data)
