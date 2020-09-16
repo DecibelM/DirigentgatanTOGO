@@ -9,3 +9,4 @@ class Departure:
         self.fgColor = fgColor #Color of the line number expressed as a string in hex.
         self.bgColor = bgColor #Background color expressed as a string in hex.
         self.deltatime = deltatime #String with each departure, in minutes left.
+
