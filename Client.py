@@ -7,7 +7,7 @@ from PyQt5.QtCore import QTimer
 class Client:
     def __init__(self):
         self.KEY = 'zRglBR_EmPfQ60PknwY_Ja5WOFMa'
-        self.SECRET = 'INSERT KEY HERE'
+        self.SECRET = 'INSERTSECRETHERE'
         self.ACCESS_TOKEN = ''
         self.getAccess()
         self.automatic_getAccessToken()
@@ -60,7 +60,7 @@ class Client:
             except ValueError:
                 r_i = r_i + 1
                 print("Error raised with status code ", r.status_code)
-                if r_i==4:
+                if r_i == 3:
                     return "Error"
         return tmp
     """Method creating a separate process for fetching the access token every 1 h"""
