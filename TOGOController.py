@@ -16,8 +16,9 @@ class TOGOController:
     and passes it to the view."""
     def update(self):
         data = self.model.update()
-        if data=="Error":
+        if "Error" in data:
             self._view.updateView(self.data)
+            print("In controller: Error with status code " + str(data[1]))
         else:
             self.data=data
             self._view.updateView(self.data)

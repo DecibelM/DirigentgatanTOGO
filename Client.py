@@ -27,7 +27,7 @@ class Client:
                 break
             except ValueError:
                 r_i=r_i+1
-                print("Error raised with status code ", r.status_code)
+                print("In getAccess: r_i=",str(r_i)," Error raised with status code ", r.status_code)
 
     """Fetches the id associated with the provided stop name"""
     def getStopID(self, STOP):
@@ -42,7 +42,7 @@ class Client:
                 break
             except ValueError:
                 r_i = r_i + 1
-                print("Error raised with status code ", r.status_code)
+                print("In getStopID: r_i=",str(r_i)," Error raised with status code ", r.status_code)
         STOP_ID = tmp['LocationList']['StopLocation'][0]['id']
         return STOP_ID
     """Fetches the list of departures (in JSON-format) from the given stop-id"""
@@ -59,9 +59,9 @@ class Client:
                 break
             except ValueError:
                 r_i = r_i + 1
-                print("Error raised with status code ", r.status_code)
-                if r_i == 3:
-                    return "Error"
+                print("In getDepartures: r_i=",str(r_i)," Error raised with status code ", r.status_code)
+                if r_i==3:
+                    return ["Error",r.status_code]
         return tmp
     """Method creating a separate process for fetching the access token every 1 h"""
     def automatic_getAccessToken(self):
