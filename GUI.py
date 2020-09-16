@@ -5,6 +5,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QWidget
 from PyQt5.QtCore import QTime
 
+"""GUI class which inherits from QMainWindow"""
 class TOGO_UI(QMainWindow):
     """Constructor for TOGO_UI"""
     def __init__(self,stopList):
@@ -103,8 +104,3 @@ class TOGO_UI(QMainWindow):
                 self.generalLayout.removeWidget(self.widgetListDeltatime[i])
                 self.widgetListDeltatime[i].deleteLater()
                 self.widgetListDeltatime[i] = None
-
-                #self.generalLayout.removeWidget(self.widgetListName[i])
-                #self.generalLayout.removeWidget(self.widgetListStopTrack[i])
-                #self.generalLayout.removeWidget(self.widgetListDirection[i])
-                #self.generalLayout.removeWidget(self.widgetListDeltatime[i])
