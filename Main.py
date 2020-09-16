@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication
 from Model import Model
 from TOGOController import TOGOController
 
+"""Main file, program is started from here"""
 def main():
     stopList = ['Lindholmen', 'Lindholmspiren']
     app = QApplication(sys.argv)
@@ -11,7 +12,7 @@ def main():
     view.show()
 
     model = Model(stopList)
-    controller = TOGOController(model, view)
+    controller = TOGOController(model, view) #GUI and Model are managed from controller
     # Execute the calculator's main loop
     sys.exit(app.exec())
 

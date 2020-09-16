@@ -1,22 +1,19 @@
 # Cred to https://github.com/danneedebro/Nasta-tur-vasttrafik
-
 import requests
 import base64
 from datetime import datetime
 from PyQt5.QtCore import QTimer
-
+"""Client class which communicates with the API"""
 class Client:
-
-    # USER INPUT
     def __init__(self):
         self.KEY = 'zRglBR_EmPfQ60PknwY_Ja5WOFMa'
-        self.SECRET = 'INSERT KEY HERE'
+        self.SECRET = 'INSERTSECRETHERE'
         self.ACCESS_TOKEN = ''
         self.getAccess()
         self.automatic_getAccessToken()
 
+    """Fethes the access token which is valid for 1h"""
     def getAccess(self):
-        # Step 1: Get Access token
         parameters = {'format': 'json', 'grant_type': 'client_credentials'}
         url = 'https://api.vasttrafik.se/token'
         head = {'Authorization': 'Basic ' + base64.b64encode((self.KEY + ':' + self.SECRET).encode()).decode(),
@@ -32,12 +29,11 @@ class Client:
                 r_i=r_i+1
                 print("In getAccess: r_i=",str(r_i)," Error raised with status code ", r.status_code)
 
+    """Fetches the id associated with the provided stop name"""
     def getStopID(self, STOP):
-        # Step 2: Get stop id from stop string using api method 'location.name'
         url = 'https://api.vasttrafik.se/bin/rest.exe/v2/location.name'
         parameters = {'format': 'json', 'input': STOP}
         head = {'Authorization': 'Bearer ' + self.ACCESS_TOKEN}
-        #tmp=self.try_requestget(url, head, parameters)
         r_i = 0
         while r_i < 3:
             try:
@@ -49,17 +45,12 @@ class Client:
                 print("In getStopID: r_i=",str(r_i)," Error raised with status code ", r.status_code)
         STOP_ID = tmp['LocationList']['StopLocation'][0]['id']
         return STOP_ID
-
+    """Fetches the list of departures (in JSON-format) from the given stop-id"""
     def getDepartures(self, STOP_ID):
-        # self.getAccess()
-        #STOP_ID = self.getStopID(stop)
-
-        # Step 3: Get list of depatures using api method 'departureBoard'
         now = datetime.now()
         url = 'https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard'
         parameters = {'format': 'json', 'id': STOP_ID, 'date': now.strftime("%Y-%m-%d"), 'time': now.strftime("%H:%M")}
         head = {'Authorization': 'Bearer ' + self.ACCESS_TOKEN}
-        #tmp = self.try_requestget(url, head, parameters)
         r_i = 0
         while r_i < 3:
             try:
@@ -72,7 +63,7 @@ class Client:
                 if r_i==3:
                     return ["Error",r.status_code]
         return tmp
-
+    """Method creating a separate process for fetching the access token every 1 h"""
     def automatic_getAccessToken(self):
         # creating a timer object
         self.timer = QTimer()

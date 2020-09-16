@@ -2,13 +2,21 @@ from Client import Client
 from Departure import Departure
 from datetime import datetime
 
+"""Class model fetches the data from Vasttrafik through the Client.
+    It calculates the minutes left until each departure.
+    It creates a sorted list of all departures"""
 class Model():
     #Constructor for Model class
     def __init__(self,stopList):
-        self.client = Client()
-        self.stopList = stopList
-        self.stopIDList = self.getStopID(stopList)
+        self.client = Client() #The Client communicating with the API
+        self.stopList = stopList #List of stop names
+        self.stopIDList = self.getStopID(stopList) #List of id:s associated with the stops
 
+    """Method that creates the sorted list of departures
+        and calculates the time left.
+        Input:
+        departures - the data from the API
+        stop - the stop name"""
     def getDeparturesList(self,departures,stop):
         rawDepList = departures['DepartureBoard']['Departure']
         departureObjectList = []
@@ -43,6 +51,11 @@ class Model():
                 #     prevDepartureObject.deltatime += deltatime
         return departureObjectList
 
+    """Looks for a departure in the departure list. If it is already there,
+    that departure is retuned. Otherwise None is returned.
+    Input:
+    departure - JSON object from the API
+    departureObjectList - list of all Departure objects created so far."""
     def findDeparture(self, departure, departureObjectList):
         for otherDeparture in departureObjectList:
             if otherDeparture.name == departure['name'] and otherDeparture.track == departure['track'] and \
@@ -50,23 +63,25 @@ class Model():
                 return otherDeparture
         return None
 
+    """Calculates minutes left until departure.
+    Input: 
+    time - dateTime object, the time of the departure
+    now - dateTime object, the current time"""
     def get_deltatime(self,time,now):
         difference = time - now
         noSeconds = difference.seconds
         deltatime = round(noSeconds / 60.0)
         return deltatime
 
+    """Method for testing purposes. Prints the departure list to the console"""
     def printDepartures(self,departureList):
-        now = datetime.now()
-
         for departureObject in departureList:
                 print("Avgång: " + departureObject.name +
                       ", Mot: " + departureObject.direction +
                       ", Hållplats, Läge: " + departureObject.stop +", "+ departureObject.track+
-                      #", Tid: " + str(departureObject.time) +
-                      #" - Now: " + str(now) +
                       ", Om " + departureObject.deltatime + " minuter")
 
+    """Retrieves the associated stop-id:s belonging to the stops"""
     def getStopID(self, stopList):
         stopIDList = []
         for stop in self.stopList:
@@ -74,6 +89,8 @@ class Model():
             stopIDList.append(stopId)
         return stopIDList
 
+    """The metod called by the controller to recieve updated data.
+        Returns a list of all departures for the selected stops."""
     def update(self):
         depList = []
 
@@ -86,8 +103,9 @@ class Model():
         depList.sort(key=lambda x: x.time)
         return depList
 
+"""This is a method for testing purpose.
+    It can test Model class separately from GUI"""
 if __name__ == '__main__':
     stopList = ['Lindholmenspiren', 'Lindholmen']
     model = Model(stopList)
     data = model.update()
-    #model.printDepartures(data)
