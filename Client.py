@@ -7,7 +7,7 @@ from PyQt5.QtCore import QTimer
 class Client:
     def __init__(self):
         self.KEY = 'zRglBR_EmPfQ60PknwY_Ja5WOFMa'
-        self.SECRET = 'INSERT SECRET HERE'
+        self.SECRET = 'SECRET'
         self.ACCESS_TOKEN = ''
         self.getAccess()
         self.automatic_getAccessToken()
