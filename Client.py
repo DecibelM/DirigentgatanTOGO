@@ -46,11 +46,11 @@ class Client:
         try:
             r = requests.get(url, headers=head, params=parameters)
             tmp = r.json()
-            #raise ConnectionError#ValueError
+            #raise ConnectionError("blah")#ValueError
         except Exception as e:
-            #print("In getDepartures, exception: ", e,e.__class__,e.args,e.__cause__)
             #print(type(e).__qualname__)
-            return type(e).__qualname__
+            errorlist=["Error",type(e).__qualname__,e]
+            return errorlist
         return tmp
     """Method creating a separate process for fetching the access token every 1 h"""
     def automatic_getAccessToken(self):
