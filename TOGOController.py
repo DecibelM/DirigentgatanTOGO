@@ -18,11 +18,12 @@ class TOGOController:
         data = self.model.update()
         if "Error" in data:
             self._view.updateView(self.data)
-            print("In controller: Error with status code " + str(data[1]))
+            print("In controller: " + str(data))
             self._view.handleErrors(data)
         else:
-            self.data=data
+            self.data = data
             self._view.updateView(self.data)
+
 
     """Starts a separate process for the updating of the view.
     It repeats every 30 seconds."""

@@ -108,9 +108,19 @@ class TOGO_UI(QMainWindow):
 
     def handleErrors(self,errorInfo):
         self.popupMessageBox.setWindowTitle("Pop-up Travel by Sigma")
-        self.popupMessageBox.setText("An error has occurred")
-        self.popupMessageBox.setIcon(QMessageBox.Warning) #Critical, Warning, Information, Question
-        self.popupMessageBox.setDetailedText(str(errorInfo))
-        x = self.popupMessageBox.show()  # this will show the pop up, or use exec for stopping program in background
-
+        if "ValueError" in errorInfo:
+            self.popupMessageBox.setText("Value Error")
+            self.popupMessageBox.setIcon(QMessageBox.Warning) #Critical, Warning, Information, Question
+            self.popupMessageBox.setDetailedText(str(errorInfo))
+            x = self.popupMessageBox.show()  # this will show the pop up
+        elif "ConnectionError" in errorInfo:
+            self.popupMessageBox.setText("Connection Error")
+            self.popupMessageBox.setIcon(QMessageBox.Critical)  # Critical, Warning, Information, Question
+            self.popupMessageBox.setDetailedText(str(errorInfo))
+            x = self.popupMessageBox.exec_()  # for stopping program in background
+        else:
+            self.popupMessageBox.setText("Unknown Error")
+            self.popupMessageBox.setIcon(QMessageBox.Critical)  # Critical, Warning, Information, Question
+            self.popupMessageBox.setDetailedText(str(errorInfo))
+            x = self.popupMessageBox.exec_()  # for stopping program in background
 
