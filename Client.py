@@ -23,7 +23,7 @@ class Client:
             tmp = r.json()
             self.ACCESS_TOKEN = tmp['access_token']
         except Exception as e:
-            print("In getAccess, exception raised: ", e, " Status code:", r.status_code)
+            print("In getAccess, exception raised: ", e)
 
     """Fetches the id associated with the provided stop name"""
     def getStopID(self, STOP):
@@ -34,7 +34,7 @@ class Client:
             r = requests.get(url, headers=head, params=parameters)
             tmp = r.json()
         except Exception as e:
-            print("In getStopID, exception raised: ", e, " Status code:", r.status_code)
+            print("In getStopID, exception raised: ", e)
         STOP_ID = tmp['LocationList']['StopLocation'][0]['id']
         return STOP_ID
     """Fetches the list of departures (in JSON-format) from the given stop-id"""
@@ -46,9 +46,11 @@ class Client:
         try:
             r = requests.get(url, headers=head, params=parameters)
             tmp = r.json()
+            #raise ConnectionError#ValueError
         except Exception as e:
-            print("In getDepartures, exception raised: ", e, " Status code:", r.status_code)
-            return ["Error"," in client.getDepartures",e,r.status_code]
+            #print("In getDepartures, exception: ", e,e.__class__,e.args,e.__cause__)
+            #print(type(e).__qualname__)
+            return type(e).__qualname__
         return tmp
     """Method creating a separate process for fetching the access token every 1 h"""
     def automatic_getAccessToken(self):
