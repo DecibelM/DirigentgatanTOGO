@@ -48,7 +48,7 @@ class Client:
             tmp = r.json()
         except Exception as e:
             print("In getDepartures, exception raised: ", e, " Status code:", r.status_code)
-            return ["Error",r.status_code]
+            return ["Error"," in client.getDepartures",e,r.status_code]
         return tmp
     """Method creating a separate process for fetching the access token every 1 h"""
     def automatic_getAccessToken(self):

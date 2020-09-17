@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QMainWindow, QWidget,QErrorMessage
+from PyQt5.QtWidgets import QMainWindow, QWidget,QMessageBox
 from PyQt5.QtCore import QTime
 
 """GUI class which inherits from QMainWindow"""
@@ -20,6 +20,7 @@ class TOGO_UI(QMainWindow):
         self.setCentralWidget(self._centralWidget)
         self._centralWidget.setLayout(self.generalLayout)
         self._createDisplay()
+        self.popupMessageBox = QMessageBox()
 
     """Creates the initial display"""
     def _createDisplay(self):
@@ -57,8 +58,6 @@ class TOGO_UI(QMainWindow):
         # creating a label object for time and adding it to the display
         self.timelabel = QLabel()
         self.generalLayout.addWidget(self.timelabel,0,3)
-
-        self.error_dialog = QErrorMessage()
 
     """Gets current time and sets the time in GUI"""
     def getQTime(self):
@@ -106,5 +105,12 @@ class TOGO_UI(QMainWindow):
                 self.generalLayout.removeWidget(self.widgetListDeltatime[i])
                 self.widgetListDeltatime[i].deleteLater()
                 self.widgetListDeltatime[i] = None
+
+    def handleErrors(self,errorInfo):
+        self.popupMessageBox.setWindowTitle("Pop-up Travel by Sigma")
+        self.popupMessageBox.setText("An error has occurred")
+        self.popupMessageBox.setIcon(QMessageBox.Warning) #Critical, Warning, Information, Question
+        self.popupMessageBox.setDetailedText(str(errorInfo))
+        x = self.popupMessageBox.show()  # this will show the pop up, or use exec for stopping program in background
 
 
