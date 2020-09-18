@@ -41,7 +41,8 @@ class Model():
                 prevDepartureObject = self.findDeparture(departure, departureObjectList)
                 if prevDepartureObject == None:
                     departureObject = Departure(departure['name'], time , departure['direction'],stop,
-                                                departure['track'],departure['fgColor'],departure['bgColor'], deltatime)
+                                                departure['track'], departure['fgColor'], departure['bgColor'],
+                                                deltatime)
                     departureObjectList.append(departureObject)
                 # If the string is 10 or less add deltatime
                 elif len(prevDepartureObject.deltatime)<11:

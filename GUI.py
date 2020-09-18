@@ -50,6 +50,7 @@ class TOGO_UI(QMainWindow):
         label4.setStyleSheet(styleSheet)
 
         listLen=20 * len(self.stopList) # Max 20 entries per stop
+        #self.widgetListColor = [None] * listLen
         self.widgetListName = [None] * listLen
         self.widgetListStopTrack = [None] * listLen
         self.widgetListDirection = [None] * listLen
@@ -79,6 +80,8 @@ class TOGO_UI(QMainWindow):
             nextEntry=data[j]
             if self.widgetListName[j] is None:
                 self.widgetListName[j]=QLabel(nextEntry.name)
+                self.widgetListName[j].setStyleSheet("background-color :" + nextEntry.fgColor + "; color :"
+                                                     + nextEntry.bgColor)
                 self.generalLayout.addWidget(self.widgetListName[j], j + 2, 0)
                 self.widgetListStopTrack[j]=QLabel(nextEntry.stop +", "+nextEntry.track)
                 self.generalLayout.addWidget(self.widgetListStopTrack[j], j + 2, 1)
