@@ -28,7 +28,7 @@ class TOGO_UI(QMainWindow):
         image = QLabel()
         pixmap = QPixmap('Travel_logga_color.png')
         image.setPixmap(pixmap.scaled(image.size()*0.5, QtCore.Qt.KeepAspectRatio))
-        self.generalLayout.addWidget(image, 0, 0, 1, 2)
+        self.generalLayout.addWidget(image, 0, 0, 1, 3)
 
         #Style sheet for formatting headlines.
         styleSheet = "padding-top: 10px; padding-left:-5px; padding-right:5px; " \
@@ -50,7 +50,6 @@ class TOGO_UI(QMainWindow):
         label4.setStyleSheet(styleSheet)
 
         listLen=20 * len(self.stopList) # Max 20 entries per stop
-        #self.widgetListColor = [None] * listLen
         self.widgetListName = [None] * listLen
         self.widgetListStopTrack = [None] * listLen
         self.widgetListDirection = [None] * listLen
@@ -65,7 +64,6 @@ class TOGO_UI(QMainWindow):
         qttime = QTime.currentTime()
         label_time = '<h1>' + qttime.toString('hh:mm') + '</h1>'
         self.timelabel.setText(label_time)
-        self.timelabel.setAlignment(QtCore.Qt.AlignRight)
         self.timelabel.setStyleSheet("padding-top : 15px;"
                              "padding-left:0px;"
                              "padding-right:30px;"
@@ -79,7 +77,7 @@ class TOGO_UI(QMainWindow):
         for j in range(0,len(data)):
             nextEntry=data[j]
             if self.widgetListName[j] is None:
-                self.widgetListName[j]=QLabel(nextEntry.name)
+                self.widgetListName[j]=QLabel("<center>" + nextEntry.name + "</center>")
                 self.widgetListName[j].setStyleSheet("background-color :" + nextEntry.fgColor + "; color :"
                                                      + nextEntry.bgColor)
                 self.generalLayout.addWidget(self.widgetListName[j], j + 2, 0)
@@ -126,4 +124,3 @@ class TOGO_UI(QMainWindow):
             self.popupMessageBox.setIcon(QMessageBox.Critical)  # Critical, Warning, Information, Question
             self.popupMessageBox.setDetailedText(str(errorInfo))
             x = self.popupMessageBox.exec_()  # for stopping program in background
-

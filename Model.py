@@ -35,6 +35,12 @@ class Model():
             elif departure['name']=="285 Älvsnabben":
                 departure['name']="Färja 285"
 
+            if departure['name'] == "176 Angeredsnabben":
+                departure['name'] = "Buss 176"
+
+            if departure['name'] == "177 Angeredsnabben":
+                departure['name'] = "Buss 177"
+
             if time >= now:
                 deltatimefloat=self.get_deltatime(time, now)
                 deltatime=deltastr + str(deltatimefloat)
