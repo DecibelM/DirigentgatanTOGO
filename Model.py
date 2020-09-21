@@ -22,7 +22,6 @@ class Model():
         departureObjectList = []
         now = datetime.now()
         for departure in rawDepList:
-
             if 'rtTime' in departure:
                 time = datetime.strptime(departure['rtDate'] + " " + departure['rtTime'], "%Y-%m-%d %H:%M")
                 deltastr=" "
