@@ -22,7 +22,6 @@ class Model():
         departureObjectList = []
         now = datetime.now()
         for departure in rawDepList:
-
             if 'rtTime' in departure:
                 time = datetime.strptime(departure['rtDate'] + " " + departure['rtTime'], "%Y-%m-%d %H:%M")
                 deltastr=" "
@@ -35,13 +34,20 @@ class Model():
             elif departure['name']=="285 Älvsnabben":
                 departure['name']="Färja 285"
 
+            if departure['name'] == "176 Angeredsnabben":
+                departure['name'] = "Buss 176"
+
+            if departure['name'] == "177 Angeredsnabben":
+                departure['name'] = "Buss 177"
+
             if time >= now:
                 deltatimefloat=self.get_deltatime(time, now)
                 deltatime=deltastr + str(deltatimefloat)
                 prevDepartureObject = self.findDeparture(departure, departureObjectList)
                 if prevDepartureObject == None:
                     departureObject = Departure(departure['name'], time , departure['direction'],stop,
-                                                departure['track'],departure['fgColor'],departure['bgColor'], deltatime)
+                                                departure['track'], departure['fgColor'], departure['bgColor'],
+                                                deltatime)
                     departureObjectList.append(departureObject)
                 # If the string is 10 or less add deltatime
                 elif len(prevDepartureObject.deltatime)<11:
